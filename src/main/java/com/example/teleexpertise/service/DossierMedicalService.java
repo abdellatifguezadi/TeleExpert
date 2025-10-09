@@ -1,0 +1,16 @@
+package com.example.teleexpertise.service;
+
+import com.example.teleexpertise.dao.DossierMedicalDao;
+import com.example.teleexpertise.model.DossierMedical;
+
+public class DossierMedicalService {
+    private DossierMedicalDao dossierMedicalDao;
+
+    public DossierMedicalService(DossierMedicalDao dossierMedicalDao) {
+        this.dossierMedicalDao = dossierMedicalDao;
+    }
+
+    public void saveDossierMedical(DossierMedical dossierMedical) {
+        dossierMedicalDao.saveDossierMedical(dossierMedical);
+    }
+}

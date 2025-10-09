@@ -10,7 +10,7 @@ public class SignesVitaux {
     private Long id;
 
     @ManyToOne
-    private DossierMedical dossierMedical;
+    private Patient patient;
 
     private LocalDateTime dateSaisie;
     private String tension;
@@ -22,8 +22,6 @@ public class SignesVitaux {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public DossierMedical getDossierMedical() { return dossierMedical; }
-    public void setDossierMedical(DossierMedical dossierMedical) { this.dossierMedical = dossierMedical; }
     public LocalDateTime getDateSaisie() { return dateSaisie; }
     public void setDateSaisie(LocalDateTime dateSaisie) { this.dateSaisie = dateSaisie; }
     public String getTension() { return tension; }
@@ -38,4 +36,6 @@ public class SignesVitaux {
     public void setPoids(Double poids) { this.poids = poids; }
     public Double getTaille() { return taille; }
     public void setTaille(Double taille) { this.taille = taille; }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 }

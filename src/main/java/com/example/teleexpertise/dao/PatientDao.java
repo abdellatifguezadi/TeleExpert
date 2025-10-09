@@ -24,4 +24,11 @@ public class PatientDao {
         entityManager.close();
         return patients;
     }
+
+    public Patient getPatientById(int id) {
+        EntityManager entityManager  = HibernateUtil.getEntityManager();
+        Patient patient = entityManager.find(Patient.class, id);
+        entityManager.close();
+        return patient;
+    }
 }

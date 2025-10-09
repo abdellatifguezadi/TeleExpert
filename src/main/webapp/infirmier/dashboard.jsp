@@ -84,7 +84,7 @@
                                                 <a href="add-signesvitaux.jsp?id=<%= patient.getId() %>" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-colors">
                                                      ajoute signes vitaux
                                                 </a>
-                                                <a href="edit-dossiermedical.jsp?id=<%= patient.getId() %>" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs transition-colors">
+                                                <a href="add-dossiermedical.jsp?id=<%= patient.getId() %>" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs transition-colors">
                                                      ajoute dossier medical
                                                 </a>
                                             </div>

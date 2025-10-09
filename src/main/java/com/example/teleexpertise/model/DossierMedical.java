@@ -17,8 +17,7 @@ public class DossierMedical {
     private String allergies;
     private String traitementEnCours;
 
-    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    private List<SignesVitaux> signesVitaux;
+
 
     @OneToMany
     private List<Consultation> historiqueConsultations;
@@ -36,8 +35,6 @@ public class DossierMedical {
     public void setAllergies(String allergies) { this.allergies = allergies; }
     public String getTraitementEnCours() { return traitementEnCours; }
     public void setTraitementEnCours(String traitementEnCours) { this.traitementEnCours = traitementEnCours; }
-    public List<SignesVitaux> getSignesVitaux() { return signesVitaux; }
-    public void setSignesVitaux(List<SignesVitaux> signesVitaux) { this.signesVitaux = signesVitaux; }
     public List<Consultation> getHistoriqueConsultations() { return historiqueConsultations; }
     public void setHistoriqueConsultations(List<Consultation> historiqueConsultations) { this.historiqueConsultations = historiqueConsultations; }
     public List<ActeTechnique> getActesTechniques() { return actesTechniques; }

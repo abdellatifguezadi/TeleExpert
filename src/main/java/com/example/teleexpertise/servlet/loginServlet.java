@@ -2,7 +2,7 @@ package com.example.teleexpertise.servlet;
 
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.Utilisateur;
-import com.example.teleexpertise.service.loginServices;
+import com.example.teleexpertise.service.LoginServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,11 +14,11 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
-    private loginServices loginService;
+    private LoginServices loginService;
 
     @Override
     public void init() {
-        loginService = new loginServices();
+        loginService = new LoginServices();
     }
 
     @Override

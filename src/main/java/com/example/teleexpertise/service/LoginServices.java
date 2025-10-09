@@ -4,11 +4,11 @@ import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.Utilisateur;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class loginServices {
+public class LoginServices {
 
     private UtilisateurDao utilisateurDao;
 
-    public loginServices() {
+    public LoginServices() {
         this.utilisateurDao = new UtilisateurDao();
     }
 
