@@ -37,11 +37,11 @@ public class loginServlet extends HttpServlet {
         if (loginService.authenticate(email, password)) {
             request.getSession().setAttribute("userEmail", email);
             if (Utilisateur.Role.INFIRMIER.toString().equals(new UtilisateurDao().findByEmail(email).getType_medecin())) {
-                response.sendRedirect("infirmier/dashboard.jsp");
+                response.sendRedirect("infirmier/dashboard");
             }else if (Utilisateur.Role.GENERALISTE.toString().equals(new UtilisateurDao().findByEmail(email).getType_medecin())) {
-                response.sendRedirect("generaliste/dashboard.jsp");
+                response.sendRedirect("generaliste/dashboard");
             }else if (Utilisateur.Role.SPECIALISTE.toString().equals(new UtilisateurDao().findByEmail(email).getType_medecin())) {
-                response.sendRedirect("specialiste/dashboard.jsp");
+                response.sendRedirect("specialiste/dashboard");
             }
         } else {
             request.setAttribute("errorMessage", "Invalid email or password");

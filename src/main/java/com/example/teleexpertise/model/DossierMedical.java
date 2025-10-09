@@ -10,6 +10,7 @@ public class DossierMedical {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     private String antecedents;
