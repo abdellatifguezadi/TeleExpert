@@ -9,7 +9,7 @@
 <body class="bg-gray-100 font-sans">
     <div class="max-w-xl mx-auto p-5 mt-10 bg-white rounded-lg shadow">
         <h2 class="text-2xl font-bold mb-4">Ajouter/Modifier Dossier Médical</h2>
-        <form action="<%= request.getContextPath() %>add-dossiermedical" method="post" class="space-y-4">
+        <form action="<%= request.getContextPath() %>/infirmier/add-dossiermedical" method="post" class="space-y-4">
             <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
             <div>
                 <label class="block mb-1">Antécédents</label>
@@ -28,5 +28,3 @@
     </div>
 </body>
 </html>
-
-
