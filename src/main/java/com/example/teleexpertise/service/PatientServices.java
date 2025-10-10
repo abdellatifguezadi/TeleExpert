@@ -28,4 +28,14 @@ public class PatientServices {
         patientDao.savePatient(patient);
     }
 
+
+    public List <Patient> getAllPatientsEnAttente() {
+        List<Patient> patients = patientDao.getPatientsEnAttente();
+
+        if (patients.isEmpty()) {
+            System.out.println("No patients found");
+        }
+        return patients;
+    }
+
 }

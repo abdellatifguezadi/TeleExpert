@@ -20,9 +20,6 @@ public class DossierMedical {
 
 
     @OneToMany
-    private List<Consultation> historiqueConsultations;
-
-    @OneToMany
     private List<ActeTechnique> actesTechniques;
 
     public Long getId() { return id; }
@@ -35,8 +32,6 @@ public class DossierMedical {
     public void setAllergies(String allergies) { this.allergies = allergies; }
     public String getTraitementEnCours() { return traitementEnCours; }
     public void setTraitementEnCours(String traitementEnCours) { this.traitementEnCours = traitementEnCours; }
-    public List<Consultation> getHistoriqueConsultations() { return historiqueConsultations; }
-    public void setHistoriqueConsultations(List<Consultation> historiqueConsultations) { this.historiqueConsultations = historiqueConsultations; }
     public List<ActeTechnique> getActesTechniques() { return actesTechniques; }
     public void setActesTechniques(List<ActeTechnique> actesTechniques) { this.actesTechniques = actesTechniques; }
 }

@@ -31,4 +31,12 @@ public class PatientDao {
         entityManager.close();
         return patient;
     }
+
+
+    public List<Patient> getPatientsEnAttente(){
+        EntityManager entityManager  = HibernateUtil.getEntityManager();
+        List<Patient> patients = entityManager.createQuery("SELECT p FROM Patient p WHERE p.fileAttente = true" , Patient.class).getResultList();
+        entityManager.close();
+        return patients;
+    }
 }

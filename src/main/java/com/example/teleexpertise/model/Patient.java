@@ -16,7 +16,9 @@ public class Patient {
     private String adresse;
     private String telephone;
     private String mutuelle;
-    private Boolean fileAttente;
+
+    @Column(name = "fileAttente", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean fileAttente = true;
 
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private DossierMedical dossierMedical;

@@ -1,10 +1,172 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.teleexpertise.model.Patient" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <html>
 <head>
-    <title>Title generaliste</title>
+    <meta charset="UTF-8">
+    <title>File d'attente des patients</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-   <h1>Bienvenue sur le tableau de bord du généraliste</h1>
+<body class="bg-gray-50">
+<div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="bg-gradient-to-r from-blue-700 to-blue-400 rounded-lg p-6 mb-8 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-4">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M15.232 15.232a6 6 0 1 1 1.414-1.414l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2 class="text-3xl font-bold text-white">File d'attente des patients</h2>
+        </div>
+        <span class="bg-white text-blue-700 px-4 py-2 rounded-full font-semibold shadow">10 Octobre 2025</span>
+    </div>
+    <div class="overflow-x-auto bg-white shadow-xl rounded-2xl border border-blue-100">
+        <table class="w-full divide-y divide-blue-100 rounded-2xl overflow-hidden">
+            <thead class="bg-blue-600">
+            <tr>
+                <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider rounded-tl-2xl">ID</th>
+                <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider">Nom</th>
+                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Consultation</th>
+                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Signes Vitaux</th>
+                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Télé-expertise</th>
+                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Détails</th>
+                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Dossier</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-blue-50">
+
+                <%
+                    List<Patient> patients = (List<Patient>) request.getAttribute("patients");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    if (patients != null && !patients.isEmpty()) {
+                        for (Patient patient : patients) {
+                %>
+            <tr class="hover:bg-blue-50 transition">
+                <td class="py-4 px-4 text-gray-700 font-mono font-bold"><%=patient.getId()%></td>
+                <td class="py-4 px-4 font-semibold text-gray-900 flex items-center gap-3">
+                    <%=patient.getNom()%> <%= patient.getPrenom()%>
+                </td>
+                <td class="py-4 px-4 text-center">
+                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('consultationModal')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Consultation
+                    </button>
+                </td>
+                <td class="py-4 px-4 text-center">
+                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('directeModal')" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Signes
+                    </button>
+                </td>
+                <td class="py-4 px-4 text-center">
+                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A2 2 0 0 1 22 9.618v4.764a2 2 0 0 1-2.447 1.894L15 14M4 6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Télé
+                    </button>
+                </td>
+                <td class="py-4 px-4 text-center">
+                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('detailsModal')" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Détails
+                    </button>
+                </td>
+                <td class="py-4 px-4 text-center">
+                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('dossierModal')" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Dossier
+                    </button>
+                </td>
+            </tr>
+            <% } %>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Consultation Modal -->
+<div id="consultationModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4">Nouvelle Consultation</h3>
+    <form>
+      <input class="w-full mb-2 border rounded px-2 py-1" placeholder="Motif" />
+      <textarea class="w-full mb-2 border rounded px-2 py-1" placeholder="Observations"></textarea>
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Valider</button>
+      <button type="button" onclick="closeModal('consultationModal')" class="ml-2 px-4 py-2 rounded border">Annuler</button>
+    </form>
+  </div>
+</div>
+
+<!-- Dossier Médical Modal -->
+<div id="dossierModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4">Dossier Médical</h3>
+    <div>
+      <p><b>Antécédents:</b> ...</p>
+      <p><b>Allergies:</b> ...</p>
+      <p><b>Traitement en cours:</b> ...</p>
+      <button type="button" onclick="closeModal('dossierModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+    </div>
+  </div>
+</div>
+<!-- Détails Consultation Modal -->
+<div id="detailsModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4">Détails Consultation</h3>
+    <div>
+      <p><b>Date:</b> ...</p>
+      <p><b>Motif:</b> ...</p>
+      <p><b>Observations:</b> ...</p>
+      <p><b>Diagnostic:</b> ...</p>
+      <button type="button" onclick="closeModal('detailsModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+            <button data-consultation-id="" onclick="openModal('acteModal')" class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v8m4-4H8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Acte
+            </button>
+    </div>
+  </div>
+    <!-- Acte Modal -->
+    <div id="acteModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+            <h3 class="text-lg font-bold mb-4">Nouvel Acte</h3>
+            <form>
+                <select class="w-full mb-2 border rounded px-2 py-1">
+                    <option>Radiographie</option>
+                    <option>Échographie</option>
+                    <option>IRM</option>
+                    <option>ECG</option>
+                </select>
+                <input class="w-full mb-2 border rounded px-2 py-1" placeholder="Résultat" />
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Valider</button>
+                <button type="button" onclick="closeModal('acteModal')" class="ml-2 px-4 py-2 rounded border">Annuler</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Signes Vitaux Modal -->
+<div id="directeModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4">Signes Vitaux</h3>
+    <div>
+      <p><b>Tension:</b> ...</p>
+      <p><b>Fréquence cardiaque:</b> ...</p>
+      <p><b>Température:</b> ...</p>
+      <p><b>Poids:</b> ...</p>
+      <button type="button" onclick="closeModal('directeModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+    </div>
+  </div>
+</div>
+<!-- Télé-expertise Modal (static placeholder) -->
+<div id="teleModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4">Télé-expertise</h3>
+    <div>
+      <p>Fonctionnalité à venir...</p>
+      <button type="button" onclick="closeModal('teleModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(id) {
+  document.getElementById(id).classList.remove('hidden');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+</script>
 </body>
 </html>
