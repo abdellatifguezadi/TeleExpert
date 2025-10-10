@@ -9,12 +9,16 @@ import java.util.List;
 public class PatientDao {
 
     public void savePatient(Patient patient) {
-        EntityManager entityManager  = HibernateUtil.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(patient);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(patient);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
     }
 
 

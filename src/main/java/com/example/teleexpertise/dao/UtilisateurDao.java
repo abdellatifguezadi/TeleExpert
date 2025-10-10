@@ -9,11 +9,16 @@ import jakarta.persistence.NoResultException;
 public class UtilisateurDao {
 
     public void save(Utilisateur utilisateur) {
-        EntityManager em = HibernateUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(utilisateur);
-        em.getTransaction().commit();
-        em.close();
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(utilisateur);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
     }
 
     public Utilisateur findByEmail(String email) {
@@ -26,7 +31,7 @@ public class UtilisateurDao {
             return utilisateur;
         } catch (NoResultException e) {
             em.close();
-            return null; // Return null if no user found instead of throwing exception
+            return null;
         }
     }
 }

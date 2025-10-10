@@ -7,11 +7,16 @@ import jakarta.persistence.EntityManager;
 public class DossierMedicalDao {
 
     public void saveDossierMedical(DossierMedical dossierMedical) {
-        EntityManager em = HibernateUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(dossierMedical);
-        em.getTransaction().commit();
-        em.close();
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(dossierMedical);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
     }
 
 }

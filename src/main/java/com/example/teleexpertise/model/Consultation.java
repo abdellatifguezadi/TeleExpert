@@ -27,8 +27,8 @@ public class Consultation {
     private String traitement;
     private Double cout;
 
-    @OneToMany(mappedBy = "consultation")
-    private List<ActeTechnique> actesTechniques;
+    @OneToOne
+    private ActeTechnique actesTechnique;
 
     public enum Status {
         EN_ATTENTE, TERMINEE, EN_ATTENTE_AVIS_SPECIALISTE
@@ -54,6 +54,6 @@ public class Consultation {
     public void setTraitement(String traitement) { this.traitement = traitement; }
     public Double getCout() { return cout; }
     public void setCout(Double cout) { this.cout = cout; }
-    public List<ActeTechnique> getActesTechniques() { return actesTechniques; }
-    public void setActesTechniques(List<ActeTechnique> actesTechniques) { this.actesTechniques = actesTechniques; }
+    public ActeTechnique getActesTechnique() { return actesTechnique; }
+    public void setActesTechniques(ActeTechnique actesTechnique) { this.actesTechnique = actesTechnique; }
 }

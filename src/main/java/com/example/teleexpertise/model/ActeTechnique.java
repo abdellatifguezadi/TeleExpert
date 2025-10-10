@@ -15,7 +15,7 @@ public class ActeTechnique {
     private LocalDateTime date;
     private String resultat;
 
-    @ManyToOne
+    @OneToOne
     private Consultation consultation;
 
     public enum TypeActe {

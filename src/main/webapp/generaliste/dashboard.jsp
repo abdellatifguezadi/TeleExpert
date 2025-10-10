@@ -41,32 +41,32 @@
                         for (Patient patient : patients) {
                 %>
             <tr class="hover:bg-blue-50 transition">
-                <td class="py-4 px-4 text-gray-700 font-mono font-bold"><%=patient.getId()%></td>
+                <td name="patientId" class="py-4 px-4 text-gray-700 font-mono font-bold"><%=patient.getId()%></td>
                 <td class="py-4 px-4 font-semibold text-gray-900 flex items-center gap-3">
                     <%=patient.getNom()%> <%= patient.getPrenom()%>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('consultationModal')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button  onclick="openConsultationModal(<%=patient.getId()%>)" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Consultation
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('directeModal')" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button onclick="openModal('directeModal')" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Signes
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button  onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A2 2 0 0 1 22 9.618v4.764a2 2 0 0 1-2.447 1.894L15 14M4 6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Télé
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('detailsModal')" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button onclick="openModal('detailsModal')" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Détails
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button data-patient-id="<%=patient.getId()%>" onclick="openModal('dossierModal')" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button onclick="openModal('dossierModal')" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Dossier
                     </button>
                 </td>
@@ -82,9 +82,24 @@
 <div id="consultationModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
   <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
     <h3 class="text-lg font-bold mb-4">Nouvelle Consultation</h3>
-    <form>
-      <input class="w-full mb-2 border rounded px-2 py-1" placeholder="Motif" />
-      <textarea class="w-full mb-2 border rounded px-2 py-1" placeholder="Observations"></textarea>
+      <form action="<%= request.getContextPath() %>/generaliste/dashboard" method="post" class="space-y-6">
+        <input type="hidden" name="patientId" id="consultationPatientId" />
+        <label class="block text-sm font-medium text-gray-700 mb-3">
+            Motif
+        </label>
+      <input type="text" name="motif" class="w-full mb-2 border rounded px-2 py-1" placeholder="Motif" />
+        <label class="block text-sm font-medium text-gray-700 mb-3">
+            diagnostic
+        </label>
+        <input type="text" name="diagnostic" class="w-full mb-2 border rounded px-2 py-1" placeholder="diagnostic" />
+        <label class="block text-sm font-medium text-gray-700 mb-3">
+            traitement
+        </label>
+        <input type="text" name="traitement" class="w-full mb-2 border rounded px-2 py-1" placeholder="traitement" />
+        <label class="block text-sm font-medium text-gray-700 mb-3">
+            Observations
+        </label>
+      <textarea name="observations" class="w-full mb-2 border rounded px-2 py-1" placeholder="Observations"></textarea>
       <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Valider</button>
       <button type="button" onclick="closeModal('consultationModal')" class="ml-2 px-4 py-2 rounded border">Annuler</button>
     </form>
@@ -166,6 +181,10 @@ function openModal(id) {
 }
 function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
+}
+function openConsultationModal(patientId) {
+  document.getElementById('consultationPatientId').value = patientId;
+  openModal('consultationModal');
 }
 </script>
 </body>

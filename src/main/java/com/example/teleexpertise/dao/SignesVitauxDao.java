@@ -8,11 +8,16 @@ import jakarta.persistence.EntityManager;
 public class SignesVitauxDao {
 
     public void saveSignesVitaux(SignesVitaux signesVitaux) {
-        EntityManager em = HibernateUtil.getEntityManager();
-        em.getTransaction().begin();
-        em.persist(signesVitaux);
-        em.getTransaction().commit();
-        em.close();
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(signesVitaux);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            entityManager.close();
+        }
     }
 
 
