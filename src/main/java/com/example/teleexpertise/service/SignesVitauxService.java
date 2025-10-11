@@ -14,5 +14,9 @@ public class SignesVitauxService {
     public void enregistrerSignesVitaux(SignesVitaux signesVitaux) {
         signesVitauxDao.saveSignesVitaux(signesVitaux);
     }
+
+    public SignesVitaux obtenirSignesVitauxParPatientId(long patientId) {
+        return signesVitauxDao.getSignesVitauxByPatient(patientId);
+    }
 }
 

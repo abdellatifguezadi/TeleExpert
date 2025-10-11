@@ -21,6 +21,22 @@ public class SignesVitauxDao {
     }
 
 
+    public SignesVitaux getSignesVitauxByPatient(long patientId) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            return entityManager.createQuery(
+                "SELECT s FROM SignesVitaux s WHERE s.patient.id = :patientId", SignesVitaux.class)
+                .setParameter("patientId", patientId)
+                .getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+
 
 
 }

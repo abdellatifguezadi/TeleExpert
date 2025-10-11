@@ -1,13 +1,11 @@
 package com.example.teleexpertise.servlet;
 
-import com.example.teleexpertise.dao.ConsultationDao;
-import com.example.teleexpertise.dao.DossierMedicalDao;
-import com.example.teleexpertise.dao.PatientDao;
-import com.example.teleexpertise.dao.UtilisateurDao;
+import com.example.teleexpertise.dao.*;
 import com.example.teleexpertise.model.*;
 import com.example.teleexpertise.service.ConsultationService;
 import com.example.teleexpertise.service.DossierMedicalService;
 import com.example.teleexpertise.service.PatientServices;
+import com.example.teleexpertise.service.SignesVitauxService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,9 +22,11 @@ public class GeneralisteDashboardServlet extends HttpServlet {
 
     private PatientServices patientServices;
     private DossierMedicalService dossierMedicalService;
+    private SignesVitauxService signesVitauxService;
     public void init() {
         patientServices = new PatientServices(new PatientDao());
         dossierMedicalService = new DossierMedicalService(new DossierMedicalDao());
+        signesVitauxService = new SignesVitauxService(new SignesVitauxDao());
     }
 
     @Override
@@ -51,7 +51,9 @@ public class GeneralisteDashboardServlet extends HttpServlet {
         List<Patient> patients = patientServices.getAllPatientsEnAttente();
          for (Patient patient : patients) {
              DossierMedical dossierMedical = dossierMedicalService.getDossierMedicalByPatientId(patient.getId());
+             SignesVitaux signesVitaux = signesVitauxService.obtenirSignesVitauxParPatientId(patient.getId());
              patient.setDossierMedical(dossierMedical);
+             patient.setSignesVitaux(signesVitaux);
          }
         request.setAttribute("patients", patients);
         request.getRequestDispatcher("/generaliste/dashboard.jsp").forward(request, response);

@@ -50,9 +50,16 @@
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button onclick="openModal('directeModal')" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Signes
+                    <button onclick="openModalSignes(<%=patient.getId()%>)" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Signes Vitaux
                     </button>
+                    <input type="hidden" id="signes-<%=patient.getId()%>-frequenceCardiaque" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getFrequenceCardiaque(): "Non renseigné"%>" />
+                    <input type="hidden" id="signes-<%=patient.getId()%>-frequenceRespiratoire" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getFrequenceRespiratoire() : "Non renseigné"%>" />
+                    <input type="hidden" id="signes-<%=patient.getId()%>-tension" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getTension() : "Non renseigné"%>" />
+                    <input type="hidden" id="signes-<%=patient.getId()%>-temperature" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getTemperature() : "Non renseigné"%>" />
+                    <input type="hidden" id="signes-<%=patient.getId()%>-taille" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getTaille() : "Non renseigné"%>" />
+                    <input type="hidden" id="signes-<%=patient.getId()%>-poids" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getPoids() : "Non renseigné"%>" />
+
                 </td>
                 <td class="py-4 px-4 text-center">
                     <button  onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
@@ -141,17 +148,49 @@
     </div>
 </div>
 <!-- Signes Vitaux Modal -->
-<div id="directeModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h3 class="text-lg font-bold mb-4">Signes Vitaux</h3>
-    <div>
-      <p><b>Tension:</b> ...</p>
-      <p><b>Fréquence cardiaque:</b> ...</p>
-      <p><b>Température:</b> ...</p>
-      <p><b>Poids:</b> ...</p>
-      <button type="button" onclick="closeModal('directeModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+<div id="signesModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full relative max-h-[80vh] overflow-y-auto mx-4">
+        <button onclick="closeModal('signesModal')" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        <input type="hidden" name="patientId" id="dossierId" />
+        <div class="pr-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
+                Dossier Médical
+            </h2>
+            <div class="space-y-4">
+                <!-- Frequence Cardiaque -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Frequence Cardiaque :</h3>
+                    <div id="signes-frequenceCardiaque" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- Frequence Respiratoire  -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Frequence Respiratoire :</h3>
+                    <div id="signes-frequenceRespiratoire" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- tension -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Tension :</h3>
+                    <div id="signes-tension" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- Temperature -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Temperature :</h3>
+                    <div id="signes-temperature" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- taille-->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Taille :</h3>
+                    <div id="signes-taille" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- poids -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Poids :</h3>
+                    <div id="signes-poids" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
@@ -185,6 +224,17 @@ function openModalDossier(patientId) {
     document.getElementById('dossier-allergies').textContent = (document.getElementById('dossier-' + patientId + '-allergies').value || '').trim();
     document.getElementById('dossier-traitement').textContent = (document.getElementById('dossier-' + patientId + '-traitement').value || '').trim();
     openModal('dossierModal');
+}
+
+function openModalSignes(patientId) {
+    document.getElementById('dossierId').value = patientId;
+    document.getElementById('signes-frequenceCardiaque').textContent = (document.getElementById('signes-' + patientId + '-frequenceCardiaque').value || '').trim();
+    document.getElementById('signes-frequenceRespiratoire').textContent = (document.getElementById('signes-' + patientId + '-frequenceRespiratoire').value || '').trim();
+    document.getElementById('signes-tension').textContent = (document.getElementById('signes-' + patientId + '-tension').value || '').trim();
+    document.getElementById('signes-temperature').textContent = (document.getElementById('signes-' + patientId + '-temperature').value || '').trim();
+    document.getElementById('signes-taille').textContent = (document.getElementById('signes-' + patientId + '-taille').value || '').trim();
+    document.getElementById('signes-poids').textContent = (document.getElementById('signes-' + patientId + '-poids').value || '').trim();
+    openModal('signesModal');
 }
 </script>
 </body>
