@@ -3,6 +3,8 @@ package com.example.teleexpertise.service;
 import com.example.teleexpertise.dao.ConsultationDao;
 import com.example.teleexpertise.model.Consultation;
 
+import java.util.List;
+
 public class ConsultationService {
 
     private ConsultationDao consultationDao;
@@ -14,5 +16,15 @@ public class ConsultationService {
    public void saveConsultation(Consultation consultation){
        consultationDao.saveConsultation(consultation);
    }
+
+   public List<Consultation> getConsultationsByPatientIdAndMedecin(long PatientId , long MedecinId){
+         List<Consultation> consultations = consultationDao.getConsultationsByPatientAndMedecin(PatientId, MedecinId);
+
+            if(consultations.isEmpty()){
+                System.out.println("No consultations found ");
+            }
+            return consultations;
+   }
+
 
 }

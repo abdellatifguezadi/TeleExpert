@@ -17,7 +17,6 @@
             </svg>
             <h2 class="text-3xl font-bold text-white">File d'attente des patients</h2>
         </div>
-        <span class="bg-white text-blue-700 px-4 py-2 rounded-full font-semibold shadow">10 Octobre 2025</span>
     </div>
     <div class="overflow-x-auto bg-white shadow-xl rounded-2xl border border-blue-100">
         <table class="w-full divide-y divide-blue-100 rounded-2xl overflow-hidden">
@@ -61,9 +60,12 @@
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button onclick="openModal('detailsModal')" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Détails
-                    </button>
+                    <form action="<%= request.getContextPath() %>/generaliste/consultation" method="get" style="display:inline;">
+                        <input type="hidden" name="patientId" value="<%=patient.getId()%>" />
+                        <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Détails
+                        </button>
+                    </form>
                 </td>
                 <td class="py-4 px-4 text-center">
                     <button onclick="openModal('dossierModal')" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
@@ -117,39 +119,6 @@
       <button type="button" onclick="closeModal('dossierModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
     </div>
   </div>
-</div>
-<!-- Détails Consultation Modal -->
-<div id="detailsModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h3 class="text-lg font-bold mb-4">Détails Consultation</h3>
-    <div>
-      <p><b>Date:</b> ...</p>
-      <p><b>Motif:</b> ...</p>
-      <p><b>Observations:</b> ...</p>
-      <p><b>Diagnostic:</b> ...</p>
-      <button type="button" onclick="closeModal('detailsModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
-            <button data-consultation-id="" onclick="openModal('acteModal')" class="bg-blue-400 hover:bg-blue-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v8m4-4H8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Acte
-            </button>
-    </div>
-  </div>
-    <!-- Acte Modal -->
-    <div id="acteModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-        <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-            <h3 class="text-lg font-bold mb-4">Nouvel Acte</h3>
-            <form>
-                <select class="w-full mb-2 border rounded px-2 py-1">
-                    <option>Radiographie</option>
-                    <option>Échographie</option>
-                    <option>IRM</option>
-                    <option>ECG</option>
-                </select>
-                <input class="w-full mb-2 border rounded px-2 py-1" placeholder="Résultat" />
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Valider</button>
-                <button type="button" onclick="closeModal('acteModal')" class="ml-2 px-4 py-2 rounded border">Annuler</button>
-            </form>
-        </div>
-    </div>
 </div>
 <!-- Signes Vitaux Modal -->
 <div id="directeModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
