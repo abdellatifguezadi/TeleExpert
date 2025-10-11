@@ -13,4 +13,8 @@ public class DossierMedicalService {
     public void saveDossierMedical(DossierMedical dossierMedical) {
         dossierMedicalDao.saveDossierMedical(dossierMedical);
     }
+
+    public DossierMedical getDossierMedicalByPatientId(long patientId) {
+        return dossierMedicalDao.getDossierMedicalByPatientId(patientId);
+    }
 }

@@ -23,8 +23,8 @@ public class Patient {
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private DossierMedical dossierMedical;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
-    private List<SignesVitaux> signesVitaux;
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+    private SignesVitaux signesVitaux;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -46,8 +46,8 @@ public class Patient {
     public void setFileAttente(Boolean fileAttente) { this.fileAttente = fileAttente; }
     public DossierMedical getDossierMedical() { return dossierMedical; }
     public void setDossierMedical(DossierMedical dossierMedical) { this.dossierMedical = dossierMedical; }
-    public List<SignesVitaux> getSignesVitaux() { return signesVitaux; }
-    public void setSignesVitaux(List<SignesVitaux> signesVitaux) { this.signesVitaux = signesVitaux; }
+    public SignesVitaux getSignesVitaux() { return signesVitaux; }
+    public void setSignesVitaux(SignesVitaux signesVitaux) { this.signesVitaux = signesVitaux; }
 
 
 

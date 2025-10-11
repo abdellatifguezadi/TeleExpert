@@ -68,9 +68,12 @@
                     </form>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button onclick="openModal('dossierModal')" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button onclick="openModalDossier(<%=patient.getId()%>)" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Dossier
                     </button>
+                    <input type="hidden" id="dossier-<%=patient.getId()%>-antecedents" value="<%=patient.getDossierMedical() != null ? patient.getDossierMedical().getAntecedents() : "Non renseigné"%>" />
+                    <input type="hidden" id="dossier-<%=patient.getId()%>-allergies" value="<%=patient.getDossierMedical() != null ? patient.getDossierMedical().getAllergies() : "Non renseigné"%>" />
+                    <input type="hidden" id="dossier-<%=patient.getId()%>-traitement" value="<%=patient.getDossierMedical() != null ? patient.getDossierMedical().getTraitementEnCours() : "Non renseigné"%>" />
                 </td>
             </tr>
             <% } %>
@@ -109,16 +112,33 @@
 </div>
 
 <!-- Dossier Médical Modal -->
-<div id="dossierModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h3 class="text-lg font-bold mb-4">Dossier Médical</h3>
-    <div>
-      <p><b>Antécédents:</b> ...</p>
-      <p><b>Allergies:</b> ...</p>
-      <p><b>Traitement en cours:</b> ...</p>
-      <button type="button" onclick="closeModal('dossierModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+<div id="dossierModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full relative max-h-[80vh] overflow-y-auto mx-4">
+        <button onclick="closeModal('dossierModal')" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+        <input type="hidden" name="patientId" id="dossierId" />
+        <div class="pr-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
+                Dossier Médical
+            </h2>
+            <div class="space-y-4">
+                <!-- Antécédents -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Antécédents :</h3>
+                    <div id="dossier-antecedents" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- Allergies -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Allergies :</h3>
+                    <div id="dossier-allergies" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+                <!-- Traitement en cours -->
+                <div class="border border-gray-200 p-4 rounded">
+                    <h3 class="font-semibold text-gray-700 mb-2">Traitement en cours :</h3>
+                    <div id="dossier-traitement" class="text-gray-600 break-words leading-relaxed"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- Signes Vitaux Modal -->
 <div id="directeModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
@@ -133,6 +153,9 @@
     </div>
   </div>
 </div>
+
+
+
 <!-- Télé-expertise Modal (static placeholder) -->
 <div id="teleModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
   <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
@@ -154,6 +177,14 @@ function closeModal(id) {
 function openConsultationModal(patientId) {
   document.getElementById('consultationPatientId').value = patientId;
   openModal('consultationModal');
+}
+
+function openModalDossier(patientId) {
+    document.getElementById('dossierId').value = patientId;
+    document.getElementById('dossier-antecedents').textContent = (document.getElementById('dossier-' + patientId + '-antecedents').value || '').trim();
+    document.getElementById('dossier-allergies').textContent = (document.getElementById('dossier-' + patientId + '-allergies').value || '').trim();
+    document.getElementById('dossier-traitement').textContent = (document.getElementById('dossier-' + patientId + '-traitement').value || '').trim();
+    openModal('dossierModal');
 }
 </script>
 </body>

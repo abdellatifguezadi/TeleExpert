@@ -1,13 +1,12 @@
 package com.example.teleexpertise.servlet;
 
 import com.example.teleexpertise.dao.ConsultationDao;
+import com.example.teleexpertise.dao.DossierMedicalDao;
 import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.dao.UtilisateurDao;
-import com.example.teleexpertise.model.Consultation;
-import com.example.teleexpertise.model.MedecinGeneraliste;
-import com.example.teleexpertise.model.Patient;
-import com.example.teleexpertise.model.Utilisateur;
+import com.example.teleexpertise.model.*;
 import com.example.teleexpertise.service.ConsultationService;
+import com.example.teleexpertise.service.DossierMedicalService;
 import com.example.teleexpertise.service.PatientServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,8 +23,10 @@ import java.util.List;
 public class GeneralisteDashboardServlet extends HttpServlet {
 
     private PatientServices patientServices;
+    private DossierMedicalService dossierMedicalService;
     public void init() {
         patientServices = new PatientServices(new PatientDao());
+        dossierMedicalService = new DossierMedicalService(new DossierMedicalDao());
     }
 
     @Override
@@ -48,6 +49,10 @@ public class GeneralisteDashboardServlet extends HttpServlet {
         }
 
         List<Patient> patients = patientServices.getAllPatientsEnAttente();
+         for (Patient patient : patients) {
+             DossierMedical dossierMedical = dossierMedicalService.getDossierMedicalByPatientId(patient.getId());
+             patient.setDossierMedical(dossierMedical);
+         }
         request.setAttribute("patients", patients);
         request.getRequestDispatcher("/generaliste/dashboard.jsp").forward(request, response);
     }

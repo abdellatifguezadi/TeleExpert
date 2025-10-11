@@ -9,7 +9,7 @@ public class SignesVitaux {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     private Patient patient;
 
     private LocalDateTime dateSaisie;
