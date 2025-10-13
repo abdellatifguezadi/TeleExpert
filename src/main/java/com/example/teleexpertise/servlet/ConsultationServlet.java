@@ -1,9 +1,11 @@
 package com.example.teleexpertise.servlet;
 
 import com.example.teleexpertise.dao.ConsultationDao;
+import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.Consultation;
 import com.example.teleexpertise.model.MedecinGeneraliste;
+import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.Utilisateur;
 import com.example.teleexpertise.service.ConsultationService;
 import jakarta.servlet.ServletException;
@@ -20,11 +22,14 @@ import java.util.List;
 public class ConsultationServlet extends HttpServlet {
 
     private ConsultationDao consultationDao;
+    private PatientDao patientDao;
 
     @Override
     public void init() throws ServletException {
         consultationDao = new ConsultationDao();
+        patientDao = new PatientDao();
     }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,7 +70,29 @@ public class ConsultationServlet extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String consultationIdStr = request.getParameter("consultationId");
+        String patientIdStr = request.getParameter("patientId");
+        String status = request.getParameter("status");
 
+        if (consultationIdStr != null && patientIdStr != null && status != null) {
+            try {
+                long consultationId = Long.parseLong(consultationIdStr);
+                int patientId = Integer.parseInt(patientIdStr);
+
+                ConsultationService consultationService = new ConsultationService(consultationDao);
+                consultationService.updateConsultationStatus(consultationId, status);
+
+                Patient patient = patientDao.getPatientById(patientId);
+                patientDao.changeStatus(patient);
+
+                response.sendRedirect(request.getContextPath() + "/generaliste/consultation?patientId=" + patientId);
+            } catch (NumberFormatException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid consultation or patient ID");
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing consultation, patient ID, or status");
+        }
     }
 }

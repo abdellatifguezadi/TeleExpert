@@ -26,5 +26,19 @@ public class ConsultationService {
             return consultations;
    }
 
+   public boolean updateConsultationStatus(Long consultationId, String statusStr) {
+       Consultation consultation = consultationDao.getConsultationById(consultationId);
+       if (consultation == null) return false;
+       try {
+           Consultation.Status status = Consultation.Status.valueOf(statusStr);
+           consultation.setStatus(status);
+           consultationDao.updateConsultation(consultation);
+           return true;
+       } catch (IllegalArgumentException e) {
+           System.out.println("Invalid status: " + statusStr);
+           return false;
+       }
+   }
+
 
 }

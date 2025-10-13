@@ -1,5 +1,6 @@
 package com.example.teleexpertise.dao;
 
+import com.example.teleexpertise.model.Consultation;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.util.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -7,6 +8,8 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public class PatientDao {
+
+    private ConsultationDao consultationDao = new ConsultationDao();
 
     public void savePatient(Patient patient) {
         EntityManager entityManager = HibernateUtil.getEntityManager();
@@ -34,6 +37,23 @@ public class PatientDao {
         Patient patient = entityManager.find(Patient.class, id);
         entityManager.close();
         return patient;
+    }
+
+    public void changeStatus(Patient patient ) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        List<Consultation> consultations = consultationDao.getConsultationsById(patient.getId());
+        boolean attente = false;
+        for (Consultation consultation : consultations) {
+            if (consultation.getStatus() != Consultation.Status.TERMINEE) {
+                attente = true;
+                break;
+            }
+        }
+        patient.setFileAttente(attente);
+        entityManager.merge(patient);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public List<Patient> getPatientsEnAttente(){

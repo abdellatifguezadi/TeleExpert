@@ -154,7 +154,7 @@
         <input type="hidden" name="patientId" id="dossierId" />
         <div class="pr-8">
             <h2 class="text-xl font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">
-                Dossier Médical
+                Signes Vitaux
             </h2>
             <div class="space-y-4">
                 <!-- Frequence Cardiaque -->
