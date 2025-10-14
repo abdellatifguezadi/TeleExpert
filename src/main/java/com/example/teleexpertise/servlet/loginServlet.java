@@ -2,6 +2,7 @@ package com.example.teleexpertise.servlet;
 
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.Utilisateur;
+import com.example.teleexpertise.model.MedecinSpecialiste;
 import com.example.teleexpertise.service.LoginServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,12 +37,19 @@ public class loginServlet extends HttpServlet {
 
         if (loginService.authenticate(email, password)) {
             request.getSession().setAttribute("userEmail", email);
-            if (Utilisateur.Role.INFIRMIER.toString().equals(new UtilisateurDao().findByEmail(email).getType_medecin())) {
+            UtilisateurDao utilisateurDao = new UtilisateurDao();
+            Utilisateur user = utilisateurDao.findByEmail(email);
+            if (Utilisateur.Role.INFIRMIER.toString().equals(user.getType_medecin())) {
                 response.sendRedirect("infirmier/dashboard");
-            }else if (Utilisateur.Role.GENERALISTE.toString().equals(new UtilisateurDao().findByEmail(email).getType_medecin())) {
+            } else if (Utilisateur.Role.GENERALISTE.toString().equals(user.getType_medecin())) {
                 response.sendRedirect("generaliste/dashboard");
-            }else if (Utilisateur.Role.SPECIALISTE.toString().equals(new UtilisateurDao().findByEmail(email).getType_medecin())) {
-                response.sendRedirect("specialiste/dashboard");
+            } else if (Utilisateur.Role.SPECIALISTE.toString().equals(user.getType_medecin())) {
+                MedecinSpecialiste spec = (MedecinSpecialiste) user;
+                if (spec.getSpecialite() == null || spec.getTarif() == null || spec.getDureeConsultation() == null) {
+                    response.sendRedirect("specialiste/complete-profile");
+                } else {
+                    response.sendRedirect("specialiste/dashboard");
+                }
             }
         } else {
             request.setAttribute("errorMessage", "Invalid email or password");

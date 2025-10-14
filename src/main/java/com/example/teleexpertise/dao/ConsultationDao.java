@@ -21,9 +21,6 @@ public class ConsultationDao {
 
         }
 
-
-
-
         public List<Consultation> getConsultationsByPatientAndMedecin(long patientId, long medecinId) {
             EntityManager entityManager  = HibernateUtil.getEntityManager();
             List<Consultation> consultations = entityManager.createQuery(

@@ -33,12 +33,12 @@
             </thead>
             <tbody class="divide-y divide-blue-50">
 
-                <%
-                    List<Patient> patients = (List<Patient>) request.getAttribute("patients");
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    if (patients != null && !patients.isEmpty()) {
-                        for (Patient patient : patients) {
-                %>
+            <%
+                List<Patient> patients = (List<Patient>) request.getAttribute("patients");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                if (patients != null && !patients.isEmpty()) {
+                    for (Patient patient : patients) {
+            %>
             <tr class="hover:bg-blue-50 transition">
                 <td name="patientId" class="py-4 px-4 text-gray-700 font-mono font-bold"><%=patient.getId()%></td>
                 <td class="py-4 px-4 font-semibold text-gray-900 flex items-center gap-3">
@@ -92,30 +92,30 @@
 
 <!-- Consultation Modal -->
 <div id="consultationModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h3 class="text-lg font-bold mb-4">Nouvelle Consultation</h3>
-      <form action="<%= request.getContextPath() %>/generaliste/dashboard" method="post" class="space-y-6">
-        <input type="hidden" name="patientId" id="consultationPatientId" />
-        <label class="block text-sm font-medium text-gray-700 mb-3">
-            Motif
-        </label>
-      <input type="text" name="motif" class="w-full mb-2 border rounded px-2 py-1" placeholder="Motif" />
-        <label class="block text-sm font-medium text-gray-700 mb-3">
-            diagnostic
-        </label>
-        <input type="text" name="diagnostic" class="w-full mb-2 border rounded px-2 py-1" placeholder="diagnostic" />
-        <label class="block text-sm font-medium text-gray-700 mb-3">
-            traitement
-        </label>
-        <input type="text" name="traitement" class="w-full mb-2 border rounded px-2 py-1" placeholder="traitement" />
-        <label class="block text-sm font-medium text-gray-700 mb-3">
-            Observations
-        </label>
-      <textarea name="observations" class="w-full mb-2 border rounded px-2 py-1" placeholder="Observations"></textarea>
-      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Valider</button>
-      <button type="button" onclick="closeModal('consultationModal')" class="ml-2 px-4 py-2 rounded border">Annuler</button>
-    </form>
-  </div>
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+        <h3 class="text-lg font-bold mb-4">Nouvelle Consultation</h3>
+        <form action="<%= request.getContextPath() %>/generaliste/dashboard" method="post" class="space-y-6">
+            <input type="hidden" name="patientId" id="consultationPatientId" />
+            <label class="block text-sm font-medium text-gray-700 mb-3">
+                Motif
+            </label>
+            <input type="text" name="motif" class="w-full mb-2 border rounded px-2 py-1" placeholder="Motif" />
+            <label class="block text-sm font-medium text-gray-700 mb-3">
+                diagnostic
+            </label>
+            <input type="text" name="diagnostic" class="w-full mb-2 border rounded px-2 py-1" placeholder="diagnostic" />
+            <label class="block text-sm font-medium text-gray-700 mb-3">
+                traitement
+            </label>
+            <input type="text" name="traitement" class="w-full mb-2 border rounded px-2 py-1" placeholder="traitement" />
+            <label class="block text-sm font-medium text-gray-700 mb-3">
+                Observations
+            </label>
+            <textarea name="observations" class="w-full mb-2 border rounded px-2 py-1" placeholder="Observations"></textarea>
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Valider</button>
+            <button type="button" onclick="closeModal('consultationModal')" class="ml-2 px-4 py-2 rounded border">Annuler</button>
+        </form>
+    </div>
 </div>
 
 <!-- Dossier Médical Modal -->
@@ -197,45 +197,45 @@
 
 <!-- Télé-expertise Modal (static placeholder) -->
 <div id="teleModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-  <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-    <h3 class="text-lg font-bold mb-4">Télé-expertise</h3>
-    <div>
-      <p>Fonctionnalité à venir...</p>
-      <button type="button" onclick="closeModal('teleModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
+        <h3 class="text-lg font-bold mb-4">Télé-expertise</h3>
+        <div>
+            <p>Fonctionnalité à venir...</p>
+            <button type="button" onclick="closeModal('teleModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-function openModal(id) {
-  document.getElementById(id).classList.remove('hidden');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.add('hidden');
-}
-function openConsultationModal(patientId) {
-  document.getElementById('consultationPatientId').value = patientId;
-  openModal('consultationModal');
-}
+    function openModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.add('hidden');
+    }
+    function openConsultationModal(patientId) {
+        document.getElementById('consultationPatientId').value = patientId;
+        openModal('consultationModal');
+    }
 
-function openModalDossier(patientId) {
-    document.getElementById('dossierId').value = patientId;
-    document.getElementById('dossier-antecedents').textContent = (document.getElementById('dossier-' + patientId + '-antecedents').value || '').trim();
-    document.getElementById('dossier-allergies').textContent = (document.getElementById('dossier-' + patientId + '-allergies').value || '').trim();
-    document.getElementById('dossier-traitement').textContent = (document.getElementById('dossier-' + patientId + '-traitement').value || '').trim();
-    openModal('dossierModal');
-}
+    function openModalDossier(patientId) {
+        document.getElementById('dossierId').value = patientId;
+        document.getElementById('dossier-antecedents').textContent = (document.getElementById('dossier-' + patientId + '-antecedents').value || '').trim();
+        document.getElementById('dossier-allergies').textContent = (document.getElementById('dossier-' + patientId + '-allergies').value || '').trim();
+        document.getElementById('dossier-traitement').textContent = (document.getElementById('dossier-' + patientId + '-traitement').value || '').trim();
+        openModal('dossierModal');
+    }
 
-function openModalSignes(patientId) {
-    document.getElementById('dossierId').value = patientId;
-    document.getElementById('signes-frequenceCardiaque').textContent = (document.getElementById('signes-' + patientId + '-frequenceCardiaque').value || '').trim();
-    document.getElementById('signes-frequenceRespiratoire').textContent = (document.getElementById('signes-' + patientId + '-frequenceRespiratoire').value || '').trim();
-    document.getElementById('signes-tension').textContent = (document.getElementById('signes-' + patientId + '-tension').value || '').trim();
-    document.getElementById('signes-temperature').textContent = (document.getElementById('signes-' + patientId + '-temperature').value || '').trim();
-    document.getElementById('signes-taille').textContent = (document.getElementById('signes-' + patientId + '-taille').value || '').trim();
-    document.getElementById('signes-poids').textContent = (document.getElementById('signes-' + patientId + '-poids').value || '').trim();
-    openModal('signesModal');
-}
+    function openModalSignes(patientId) {
+        document.getElementById('dossierId').value = patientId;
+        document.getElementById('signes-frequenceCardiaque').textContent = (document.getElementById('signes-' + patientId + '-frequenceCardiaque').value || '').trim();
+        document.getElementById('signes-frequenceRespiratoire').textContent = (document.getElementById('signes-' + patientId + '-frequenceRespiratoire').value || '').trim();
+        document.getElementById('signes-tension').textContent = (document.getElementById('signes-' + patientId + '-tension').value || '').trim();
+        document.getElementById('signes-temperature').textContent = (document.getElementById('signes-' + patientId + '-temperature').value || '').trim();
+        document.getElementById('signes-taille').textContent = (document.getElementById('signes-' + patientId + '-taille').value || '').trim();
+        document.getElementById('signes-poids').textContent = (document.getElementById('signes-' + patientId + '-poids').value || '').trim();
+        openModal('signesModal');
+    }
 </script>
 </body>
 </html>

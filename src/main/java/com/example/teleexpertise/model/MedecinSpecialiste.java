@@ -19,7 +19,7 @@ public class MedecinSpecialiste extends Utilisateur {
     }
 
     public enum Specialite {
-        CARDIOLOGIE, PNEUMOLOGIE
+        CARDIOLOGIE, PNEUMOLOGIE , ORTHOPEDIE ,NEPHROLOGIE , PSYCHIATRIE , RHUMATALOGIE , DERMATOLOGIE , ENDOCRINOLOGIE , GASTRO_ENTEROLOGIE  , NEUROLOGIE
     }
 
     public Specialite getSpecialite() { return specialite; }

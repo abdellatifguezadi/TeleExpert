@@ -12,7 +12,11 @@ public class UtilisateurDao {
         EntityManager entityManager = HibernateUtil.getEntityManager();
         try{
             entityManager.getTransaction().begin();
-            entityManager.persist(utilisateur);
+            if (utilisateur.getId() == null) {
+                entityManager.persist(utilisateur);
+            } else {
+                entityManager.merge(utilisateur);
+            }
             entityManager.getTransaction().commit();
         }catch (Exception e){
             e.printStackTrace();
