@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +16,17 @@
             <p class="text-gray-600 text-sm">Welcome back! Please sign in to your account.</p>
         </div>
 
-        <% if (request.getAttribute("errorMessage") != null) { %>
+        <c:if test="${not empty errorMessage}">
             <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded mb-4">
-                <%= request.getAttribute("errorMessage") %>
+            ${errorMessage}
             </div>
-        <% } %>
+        </c:if>
+
+<%--        <% if (request.getAttribute("errorMessage") != null) { %>--%>
+<%--            <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded mb-4">--%>
+<%--                <%= request.getAttribute("errorMessage") %>--%>
+<%--            </div>--%>
+<%--        <% } %>--%>
 
         <form action="login" method="post">
             <div class="mb-6">

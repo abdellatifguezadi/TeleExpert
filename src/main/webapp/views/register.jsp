@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,17 +15,31 @@
             <p class="text-gray-600 text-sm">Create your account to get started with healthcare expertise.</p>
         </div>
 
-        <% if (request.getAttribute("error") != null) { %>
-            <div class="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 rounded mb-4">
-                <%= request.getAttribute("error") %>
-            </div>
-        <% } %>
 
-        <% if (request.getAttribute("success") != null) { %>
-            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded mb-4">
-                <%= request.getAttribute("success") %>
+        <c:if test="${not empty error}">
+            <div class="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 rounded mb-4">
+                ${error}
             </div>
-        <% } %>
+        </c:if>
+
+<%--        <% if (request.getAttribute("error") != null) { %>--%>
+<%--            <div class="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 rounded mb-4">--%>
+<%--                <%= request.getAttribute("error") %>--%>
+<%--            </div>--%>
+<%--        <% } %>--%>
+
+
+        <c:if test="${not empty success}">
+            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded mb-4">
+                ${success}
+            </div>
+        </c:if>
+
+<%--        <% if (request.getAttribute("success") != null) { %>--%>
+<%--            <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded mb-4">--%>
+<%--                <%= request.getAttribute("success") %>--%>
+<%--            </div>--%>
+<%--        <% } %>--%>
 
         <form action="${pageContext.request.contextPath}/register" method="post">
             <div class="flex gap-4 md:flex-row flex-col">
