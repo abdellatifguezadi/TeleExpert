@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Compléter le profil spécialiste</title>
@@ -9,10 +10,13 @@
 <body class="bg-gray-100 font-sans min-h-screen flex items-center justify-center">
     <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg mt-10">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-700">Compléter votre profil</h2>
-        <% String error = (String) request.getAttribute("error"); if (error != null) { %>
-            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center"><%= error %></div>
-        <% } %>
-        <form action="<%= request.getContextPath() %>/specialiste/complete-profile" method="post" class="space-y-4">
+<%--        <% String error = (String) request.getAttribute("error"); if (error != null) { %>--%>
+<%--            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center"><%= error %></div>--%>
+<%--        <% } %>--%>
+        <c:if test="${not empty error}">
+            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-center">${error}</div>
+        </c:if>
+        <form action="${pageContext.request.contextPath}/specialiste/complete-profile" method="post" class="space-y-4">
             <div>
                 <label class="block mb-1 font-semibold">Spécialité</label>
                 <select name="specialite" class="w-full border rounded px-3 py-2" required>
