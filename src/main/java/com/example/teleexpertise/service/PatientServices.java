@@ -1,5 +1,6 @@
 package com.example.teleexpertise.service;
 
+import com.example.teleexpertise.dao.IPatientDao;
 import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.model.Consultation;
 import com.example.teleexpertise.model.Patient;
@@ -14,7 +15,7 @@ public class PatientServices {
     private PatientDao patientDao ;
 
     public PatientServices(PatientDao patientDao) {
-        this.patientDao = patientDao;
+        this.patientDao =  patientDao;
     }
 
     public List <Patient> getAllPatients() {

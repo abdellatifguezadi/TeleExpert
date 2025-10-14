@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class DossierMedicalDao {
+public class DossierMedicalDao implements IDossierMedicalDao{
 
     public void saveDossierMedical(DossierMedical dossierMedical) {
         EntityManager entityManager = HibernateUtil.getEntityManager();

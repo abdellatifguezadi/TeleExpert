@@ -1,6 +1,7 @@
 package com.example.teleexpertise.service;
 
 import com.example.teleexpertise.dao.DossierMedicalDao;
+import com.example.teleexpertise.dao.IDossierMedicalDao;
 import com.example.teleexpertise.model.DossierMedical;
 
 public class DossierMedicalService {

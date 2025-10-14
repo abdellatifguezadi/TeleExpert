@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class ConsultationDao {
+public class ConsultationDao implements IConsultationDao {
         public void saveConsultation(Consultation consultation) {
             EntityManager entityManager = HibernateUtil.getEntityManager();
             try{
