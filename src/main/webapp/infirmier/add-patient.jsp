@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,14 +17,14 @@
 
         <!-- Back Button -->
         <div class="mb-6">
-            <a href="<%= request.getContextPath() %>/infirmier/dashboard" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 w-fit">
+            <a href="${pageContext.request.contextPath}/infirmier/dashboard" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 w-fit">
                 ← Retour au tableau de bord
             </a>
         </div>
 
         <!-- Add Patient Form -->
         <div class="bg-white rounded-lg shadow-md p-8">
-            <form action="<%= request.getContextPath() %>/infirmier/dashboard" method="post" class="space-y-6">
+            <form action="${pageContext.request.contextPath}/infirmier/dashboard" method="post" class="space-y-6">
                 <!-- Personal Information Section -->
                 <div class="border-b border-gray-200 pb-6">
                     <h2 class="text-xl font-bold text-gray-900 mb-4">📋 Informations personnelles</h2>
@@ -144,7 +145,7 @@
 
                 <!-- Form Actions -->
                 <div class="flex justify-end gap-4 pt-6 border-t border-gray-200">
-                    <a href="<%= request.getContextPath() %>/infirmier/dashboard"
+                    <a href="${pageContext.request.contextPath}/infirmier/dashboard"
                        class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200">
                         Annuler
                     </a>
