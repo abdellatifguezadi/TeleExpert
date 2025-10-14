@@ -6,7 +6,7 @@ import com.example.teleexpertise.model.Consultation;
 
 import java.util.List;
 
-public class ConsultationService {
+public class ConsultationService implements IConsultationService {
 
     private ConsultationDao consultationDao;
 

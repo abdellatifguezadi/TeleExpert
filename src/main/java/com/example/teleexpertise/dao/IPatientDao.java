@@ -7,12 +7,8 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public interface IPatientDao {
-    public void savePatient(Patient patient) ;
-
-
-    public List<Patient> getAllPatients();
-
-    public Patient getPatientById(int id);
-
-    public List<Patient> getPatientsEnAttente();
+     void savePatient(Patient patient) ;
+     List<Patient> getAllPatients();
+     Patient getPatientById(int id);
+     List<Patient> getPatientsEnAttente();
 }

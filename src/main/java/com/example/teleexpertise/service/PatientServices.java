@@ -10,7 +10,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class PatientServices {
+public class PatientServices implements IPatientServices {
 
     private PatientDao patientDao ;
 

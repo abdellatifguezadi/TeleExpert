@@ -4,7 +4,7 @@ import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.Utilisateur;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class LoginServices {
+public class LoginServices implements ILoginServices {
 
     private UtilisateurDao utilisateurDao;
 

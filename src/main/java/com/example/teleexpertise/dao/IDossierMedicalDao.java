@@ -7,9 +7,6 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public interface IDossierMedicalDao {
-
-    public void saveDossierMedical(DossierMedical dossierMedical);
-
-
-    public DossierMedical getDossierMedicalByPatientId(long patientId);
+     void saveDossierMedical(DossierMedical dossierMedical);
+     DossierMedical getDossierMedicalByPatientId(long patientId);
 }

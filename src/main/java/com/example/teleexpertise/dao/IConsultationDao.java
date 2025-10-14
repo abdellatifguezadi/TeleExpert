@@ -7,16 +7,11 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public interface IConsultationDao {
-    public  void saveConsultation(Consultation consultation);
-
-
-    public List<Consultation> getConsultationsByPatientAndMedecin(long patientId, long medecinId) ;
-
-    public Consultation getConsultationById(Long id) ;
-
-    public List<Consultation> getConsultationsById(long id) ;
-
-    public void updateConsultation(Consultation consultation);
+    void saveConsultation(Consultation consultation);
+    List<Consultation> getConsultationsByPatientAndMedecin(long patientId, long medecinId) ;
+    Consultation getConsultationById(Long id) ;
+    List<Consultation> getConsultationsById(long id) ;
+    void updateConsultation(Consultation consultation);
 
 }
 

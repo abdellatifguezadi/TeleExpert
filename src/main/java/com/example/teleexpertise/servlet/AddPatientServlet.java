@@ -22,7 +22,6 @@ public class AddPatientServlet extends HttpServlet {
             return;
         }
 
-        // Forward to the add-patient JSP page
         request.getRequestDispatcher("/infirmier/add-patient.jsp").forward(request, response);
     }
 }

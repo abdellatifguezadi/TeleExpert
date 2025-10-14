@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 public interface IUtilisateurDao {
-    public void save(Utilisateur utilisateur);
-
-    public Utilisateur findByEmail(String email);
+     void save(Utilisateur utilisateur);
+     Utilisateur findByEmail(String email);
 }

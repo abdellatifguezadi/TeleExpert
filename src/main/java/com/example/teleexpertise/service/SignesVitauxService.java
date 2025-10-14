@@ -3,7 +3,7 @@ package com.example.teleexpertise.service;
 import com.example.teleexpertise.dao.SignesVitauxDao;
 import com.example.teleexpertise.model.SignesVitaux;
 
-public class SignesVitauxService {
+public class SignesVitauxService implements ISignesVitauxService {
 
     private SignesVitauxDao signesVitauxDao;
 
@@ -19,4 +19,3 @@ public class SignesVitauxService {
         return signesVitauxDao.getSignesVitauxByPatient(patientId);
     }
 }
-
