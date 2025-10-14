@@ -2,6 +2,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.teleexpertise.model.Patient" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -33,32 +36,49 @@
             </thead>
             <tbody class="divide-y divide-blue-50">
 
-            <%
-                List<Patient> patients = (List<Patient>) request.getAttribute("patients");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                if (patients != null && !patients.isEmpty()) {
-                    for (Patient patient : patients) {
-            %>
+
+
+<%--            <%--%>
+<%--                List<Patient> patients = (List<Patient>) request.getAttribute("patients");--%>
+<%--                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");--%>
+<%--                if (patients != null && !patients.isEmpty()) {--%>
+<%--                    for (Patient patient : patients) {--%>
+<%--            %>--%>
+
+            <c:if test="${not empty patients}">
+            <c:forEach var="patient" items="${patients}">
             <tr class="hover:bg-blue-50 transition">
-                <td name="patientId" class="py-4 px-4 text-gray-700 font-mono font-bold"><%=patient.getId()%></td>
+                <td name="patientId" class="py-4 px-4 text-gray-700 font-mono font-bold">${patient.id} </td>
                 <td class="py-4 px-4 font-semibold text-gray-900 flex items-center gap-3">
-                    <%=patient.getNom()%> <%= patient.getPrenom()%>
+                    ${patient.nom} ${patient.prenom}
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button  onclick="openConsultationModal(<%=patient.getId()%>)" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button  onclick="openConsultationModal(${patient.id})" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Consultation
                     </button>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button onclick="openModalSignes(<%=patient.getId()%>)" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button onclick="openModalSignes(${patient.id})" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Signes Vitaux
                     </button>
-                    <input type="hidden" id="signes-<%=patient.getId()%>-frequenceCardiaque" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getFrequenceCardiaque(): "Non renseigné"%>" />
-                    <input type="hidden" id="signes-<%=patient.getId()%>-frequenceRespiratoire" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getFrequenceRespiratoire() : "Non renseigné"%>" />
-                    <input type="hidden" id="signes-<%=patient.getId()%>-tension" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getTension() : "Non renseigné"%>" />
-                    <input type="hidden" id="signes-<%=patient.getId()%>-temperature" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getTemperature() : "Non renseigné"%>" />
-                    <input type="hidden" id="signes-<%=patient.getId()%>-taille" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getTaille() : "Non renseigné"%>" />
-                    <input type="hidden" id="signes-<%=patient.getId()%>-poids" value="<%=patient.getSignesVitaux() != null ? patient.getSignesVitaux().getPoids() : "Non renseigné"%>" />
+                    <input type="hidden" id="signes-${patient.id}-frequenceCardiaque"
+                           value="${not empty patient.signesVitaux ? patient.signesVitaux.frequenceCardiaque : 'Non renseigné'}" />
+
+                    <input type="hidden" id="signes-${patient.id}-frequenceRespiratoire"
+                           value="${not empty patient.signesVitaux ? patient.signesVitaux.frequenceRespiratoire : 'Non renseigné'}" />
+
+                    <input type="hidden" id="signes-${patient.id}-tension"
+                           value="${not empty patient.signesVitaux ? patient.signesVitaux.tension : 'Non renseigné'}" />
+
+                    <input type="hidden" id="signes-${patient.id}-temperature"
+                           value="${not empty patient.signesVitaux ? patient.signesVitaux.temperature : 'Non renseigné'}" />
+
+                    <input type="hidden" id="signes-${patient.id}-taille"
+                           value="${not empty patient.signesVitaux ? patient.signesVitaux.taille : 'Non renseigné'}" />
+
+                    <input type="hidden" id="signes-${patient.id}-poids"
+                           value="${not empty patient.signesVitaux ? patient.signesVitaux.poids : 'Non renseigné'}" />
+
 
                 </td>
                 <td class="py-4 px-4 text-center">
@@ -68,23 +88,23 @@
                 </td>
                 <td class="py-4 px-4 text-center">
                     <form action="<%= request.getContextPath() %>/generaliste/consultation" method="get" style="display:inline;">
-                        <input type="hidden" name="patientId" value="<%=patient.getId()%>" />
+                        <input type="hidden" name="patientId" value="${patient.id}" />
                         <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Détails
                         </button>
                     </form>
                 </td>
                 <td class="py-4 px-4 text-center">
-                    <button onclick="openModalDossier(<%=patient.getId()%>)" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
+                    <button onclick="openModalDossier(${patient.id})" class="bg-gray-400 hover:bg-gray-500 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Dossier
                     </button>
-                    <input type="hidden" id="dossier-<%=patient.getId()%>-antecedents" value="<%=patient.getDossierMedical() != null ? patient.getDossierMedical().getAntecedents() : "Non renseigné"%>" />
-                    <input type="hidden" id="dossier-<%=patient.getId()%>-allergies" value="<%=patient.getDossierMedical() != null ? patient.getDossierMedical().getAllergies() : "Non renseigné"%>" />
-                    <input type="hidden" id="dossier-<%=patient.getId()%>-traitement" value="<%=patient.getDossierMedical() != null ? patient.getDossierMedical().getTraitementEnCours() : "Non renseigné"%>" />
+                    <input type="hidden" id="dossier-${patient.id}-antecedents" value="${not empty patient.dossierMedical ? patient.dossierMedical.antecedents : "Non renseigné"  }" />
+                    <input type="hidden" id="dossier-${patient.id}-allergies" value="${not empty patient.dossierMedical ? patient.dossierMedical.allergies : 'Non renseigné'}" />
+                    <input type="hidden" id="dossier-${patient.id}-traitement" value="${not empty patient.dossierMedical ? patient.dossierMedical.traitementEnCours : 'Non renseigné'}" />
                 </td>
             </tr>
-            <% } %>
-            <% } %>
+            </c:forEach>
+            </c:if>
             </tbody>
         </table>
     </div>
