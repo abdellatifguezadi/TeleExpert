@@ -8,6 +8,7 @@ import com.example.teleexpertise.model.MedecinGeneraliste;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.Utilisateur;
 import com.example.teleexpertise.service.ConsultationService;
+import com.example.teleexpertise.service.PatientServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,12 +23,12 @@ import java.util.List;
 public class ConsultationServlet extends HttpServlet {
 
     private ConsultationDao consultationDao;
-    private PatientDao patientDao;
+    private PatientServices patientServices;
 
     @Override
     public void init() throws ServletException {
         consultationDao = new ConsultationDao();
-        patientDao = new PatientDao();
+        patientServices = new PatientServices(new PatientDao());
     }
 
 
@@ -84,8 +85,8 @@ public class ConsultationServlet extends HttpServlet {
                 ConsultationService consultationService = new ConsultationService(consultationDao);
                 consultationService.updateConsultationStatus(consultationId, status);
 
-                Patient patient = patientDao.getPatientById(patientId);
-                patientDao.changeStatus(patient);
+                Patient patient = patientServices.getPatientById(patientId);
+                patientServices.changeStatus(patient);
 
                 response.sendRedirect(request.getContextPath() + "/generaliste/consultation?patientId=" + patientId);
             } catch (NumberFormatException e) {
