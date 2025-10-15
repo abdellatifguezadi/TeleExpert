@@ -4,6 +4,7 @@ import com.example.teleexpertise.model.DossierMedical;
 import com.example.teleexpertise.util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
+import java.util.Collections;
 import java.util.List;
 
 public class DossierMedicalDao implements IDossierMedicalDao{
@@ -15,7 +16,10 @@ public class DossierMedicalDao implements IDossierMedicalDao{
             entityManager.persist(dossierMedical);
             entityManager.getTransaction().commit();
         }catch (Exception e){
-            e.printStackTrace();
+            System.err.println("Error in saveDossierMedical: " + e.getMessage());
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }finally {
             entityManager.close();
         }
@@ -30,6 +34,9 @@ public class DossierMedicalDao implements IDossierMedicalDao{
                 .setParameter("patientId", patientId)
                 .getResultList();
             return dossierMedicals.isEmpty() ? null : dossierMedicals.get(0);
+        } catch (Exception e) {
+            System.err.println("Error in getDossierMedicalByPatientId: " + e.getMessage());
+            return null;
         } finally {
             entityManager.close();
         }

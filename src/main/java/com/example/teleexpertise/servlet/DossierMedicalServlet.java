@@ -2,12 +2,14 @@ package com.example.teleexpertise.servlet;
 
 
 import com.example.teleexpertise.dao.DossierMedicalDao;
+import com.example.teleexpertise.dao.IDossierMedicalDao;
 import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.DossierMedical;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.Utilisateur;
 import com.example.teleexpertise.service.DossierMedicalService;
+import com.example.teleexpertise.service.IDossierMedicalService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,8 +39,8 @@ public class DossierMedicalServlet extends HttpServlet {
             dossierMedical.setTraitementEnCours(traitementEnCours);
             dossierMedical.setAntecedents(antecedents);
 
-            DossierMedicalDao dossierMedicalDao = new DossierMedicalDao();
-            DossierMedicalService dossierMedicalService = new DossierMedicalService(dossierMedicalDao);
+            IDossierMedicalDao dossierMedicalDao = new DossierMedicalDao();
+            IDossierMedicalService dossierMedicalService = new DossierMedicalService(dossierMedicalDao);
             dossierMedicalService.saveDossierMedical(dossierMedical);
 
 
