@@ -1,6 +1,8 @@
 package com.example.teleexpertise.servlet;
 
 import com.example.teleexpertise.dao.ConsultationDao;
+import com.example.teleexpertise.dao.IConsultationDao;
+import com.example.teleexpertise.dao.IPatientDao;
 import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.Consultation;
@@ -8,6 +10,8 @@ import com.example.teleexpertise.model.MedecinGeneraliste;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.Utilisateur;
 import com.example.teleexpertise.service.ConsultationService;
+import com.example.teleexpertise.service.IConsultationService;
+import com.example.teleexpertise.service.IPatientServices;
 import com.example.teleexpertise.service.PatientServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,13 +26,14 @@ import java.util.List;
 @WebServlet("/generaliste/consultation")
 public class ConsultationServlet extends HttpServlet {
 
-    private ConsultationDao consultationDao;
-    private PatientServices patientServices;
+    private IConsultationDao consultationDao;
+    private IPatientServices patientServices;
 
     @Override
     public void init() throws ServletException {
         consultationDao = new ConsultationDao();
-        patientServices = new PatientServices(new PatientDao());
+        IPatientDao patientDao = new PatientDao();
+        patientServices = new PatientServices(patientDao, consultationDao);
     }
 
 
@@ -59,7 +64,8 @@ public class ConsultationServlet extends HttpServlet {
             try {
                 long patientId = Long.parseLong(patientIdStr);
                 ConsultationService consultationService = new ConsultationService(consultationDao);
-                List<Consultation> consultations = consultationService.getConsultationsByPatientIdAndMedecin(patientId, medecinId);
+                List<Consultation> consultations = consultationService.
+                        getConsultationsByPatientIdAndMedecin(patientId, medecinId);
                 request.setAttribute("consultations", consultations);
                 request.setAttribute("patientId", patientId);
                 request.getRequestDispatcher("/generaliste/details-consultation.jsp").forward(request, response);
