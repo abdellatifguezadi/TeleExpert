@@ -5,7 +5,7 @@ import com.example.teleexpertise.model.SignesVitaux;
 import com.example.teleexpertise.util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
-public class SignesVitauxDao {
+public class SignesVitauxDao implements ISignesVitauxDao {
 
     public void saveSignesVitaux(SignesVitaux signesVitaux) {
         EntityManager entityManager = HibernateUtil.getEntityManager();
@@ -14,7 +14,10 @@ public class SignesVitauxDao {
             entityManager.persist(signesVitaux);
             entityManager.getTransaction().commit();
         }catch (Exception e){
-            e.printStackTrace();
+            System.err.println("Error in saveSignesVitaux: " + e.getMessage());
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }finally {
             entityManager.close();
         }
@@ -29,7 +32,7 @@ public class SignesVitauxDao {
                 .setParameter("patientId", patientId)
                 .getSingleResult();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error in getSignesVitauxByPatient: " + e.getMessage());
             return null;
         } finally {
             entityManager.close();

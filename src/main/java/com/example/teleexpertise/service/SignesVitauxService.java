@@ -1,13 +1,13 @@
 package com.example.teleexpertise.service;
 
-import com.example.teleexpertise.dao.SignesVitauxDao;
+import com.example.teleexpertise.dao.ISignesVitauxDao;
 import com.example.teleexpertise.model.SignesVitaux;
 
 public class SignesVitauxService implements ISignesVitauxService {
 
-    private SignesVitauxDao signesVitauxDao;
+    private ISignesVitauxDao signesVitauxDao;
 
-    public SignesVitauxService(SignesVitauxDao signesVitauxDao) {
+    public SignesVitauxService(ISignesVitauxDao signesVitauxDao) {
         this.signesVitauxDao = signesVitauxDao;
     }
 

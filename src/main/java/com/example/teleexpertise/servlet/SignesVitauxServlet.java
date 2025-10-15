@@ -4,9 +4,11 @@ import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.SignesVitaux;
 import com.example.teleexpertise.model.DossierMedical;
-import com.example.teleexpertise.service.SignesVitauxService;
+import com.example.teleexpertise.service.ISignesVitauxService;
+import com.example.teleexpertise.dao.ISignesVitauxDao;
 import com.example.teleexpertise.dao.SignesVitauxDao;
 import com.example.teleexpertise.dao.DossierMedicalDao;
+import com.example.teleexpertise.service.SignesVitauxService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -44,8 +46,8 @@ public class SignesVitauxServlet extends HttpServlet {
             signesVitaux.setTaille(taille);
             signesVitaux.setDateSaisie(dateSaisie);
 
-            SignesVitauxDao signesVitauxDao = new SignesVitauxDao();
-            SignesVitauxService signesVitauxService = new SignesVitauxService(signesVitauxDao);
+            ISignesVitauxDao signesVitauxDao = new SignesVitauxDao();
+            ISignesVitauxService signesVitauxService = new SignesVitauxService(signesVitauxDao);
             signesVitauxService.enregistrerSignesVitaux(signesVitaux);
 
             response.sendRedirect(request.getContextPath() + "/infirmier/dashboard");
