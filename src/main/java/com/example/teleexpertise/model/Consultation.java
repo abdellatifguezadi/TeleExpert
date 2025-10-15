@@ -30,9 +30,14 @@ public class Consultation {
     @OneToOne
     private ActeTechnique actesTechnique;
 
+    @OneToOne
+    private Creneau creneau;
+
     public enum Status {
         EN_ATTENTE, TERMINEE, EN_ATTENTE_AVIS_SPECIALISTE
     }
+
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -56,4 +61,7 @@ public class Consultation {
     public void setCout(Double cout) { this.cout = cout; }
     public ActeTechnique getActesTechnique() { return actesTechnique; }
     public void setActesTechniques(ActeTechnique actesTechnique) { this.actesTechnique = actesTechnique; }
+    public Creneau getCreneau() {return creneau;}
+    public void setCreneau(Creneau creneau) {this.creneau = creneau;}
+
 }

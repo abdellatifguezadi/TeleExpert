@@ -2,6 +2,7 @@ package com.example.teleexpertise.servlet;
 
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.*;
+import com.example.teleexpertise.dao.CreneauDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -63,6 +67,27 @@ public class RegisterServlet extends HttpServlet {
 
         try {
             utilisateurDao.save(user);
+            if (user instanceof MedecinSpecialiste) {
+                CreneauDao creneauDao = new CreneauDao();
+                MedecinSpecialiste specialiste = (MedecinSpecialiste) user;
+                LocalDate today = LocalDate.now();
+                LocalTime[] startTimes = {
+                    LocalTime.of(9, 0),
+                    LocalTime.of(9, 30),
+                    LocalTime.of(10, 0),
+                    LocalTime.of(10, 30),
+                    LocalTime.of(11, 0),
+                    LocalTime.of(11, 30)
+                };
+                for (LocalTime start : startTimes) {
+                    Creneau creneau = new Creneau();
+                    creneau.setMedecinSpecialiste(specialiste);
+                    creneau.setDateHeureDebut(LocalDateTime.of(today, start));
+                    creneau.setDateHeureFin(LocalDateTime.of(today, start.plusMinutes(30)));
+                    creneau.setStatus(Creneau.Status.DISPONIBLE);
+                    creneauDao.save(creneau);
+                }
+            }
             resp.sendRedirect("index.jsp");
         } catch (Exception e) {
             req.setAttribute("error", "Erreur lors de l'inscription: " + e.getMessage());

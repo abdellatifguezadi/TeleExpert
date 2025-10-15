@@ -18,6 +18,9 @@ public class Creneau {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToOne(mappedBy = "creneau")
+    private Consultation consultation;
+
     public enum Status {
         DISPONIBLE, RESERVE, ARCHIVE
     }
@@ -32,4 +35,6 @@ public class Creneau {
     public void setDateHeureFin(LocalDateTime dateHeureFin) { this.dateHeureFin = dateHeureFin; }
     public Status getStatus() { return status; }
     public void setStatus(Status status) { this.status = status; }
+    public Consultation getConsultation() { return consultation; }
+    public void setConsultation(Consultation consultation) { this.consultation = consultation;}
 }
