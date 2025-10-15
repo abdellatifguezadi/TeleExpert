@@ -24,7 +24,9 @@ public class GeneralisteDashboardServlet extends HttpServlet {
     private DossierMedicalService dossierMedicalService;
     private SignesVitauxService signesVitauxService;
     public void init() {
-        patientServices = new PatientServices(new PatientDao());
+        IPatientDao patientDao = new PatientDao();
+        IConsultationDao consultationDao = new ConsultationDao();
+        patientServices = new PatientServices(patientDao, consultationDao);
         dossierMedicalService = new DossierMedicalService(new DossierMedicalDao());
         signesVitauxService = new SignesVitauxService(new SignesVitauxDao());
     }

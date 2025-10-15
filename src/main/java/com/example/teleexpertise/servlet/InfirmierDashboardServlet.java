@@ -1,11 +1,13 @@
 package com.example.teleexpertise.servlet;
 
 
+import com.example.teleexpertise.dao.IPatientDao;
 import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.dao.UtilisateurDao;
 import com.example.teleexpertise.model.DossierMedical;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.Utilisateur;
+import com.example.teleexpertise.service.IPatientServices;
 import com.example.teleexpertise.service.PatientServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,10 +23,11 @@ import java.util.List;
 @WebServlet("/infirmier/dashboard")
 public class InfirmierDashboardServlet extends HttpServlet {
 
-    private PatientServices patientServices;
+    private IPatientServices patientServices;
 
     public void init() {
-        patientServices = new PatientServices(new PatientDao());
+        IPatientDao patientDao = new PatientDao();
+        patientServices = new PatientServices(patientDao, null); // Pass null or inject as needed
     }
 
     @Override

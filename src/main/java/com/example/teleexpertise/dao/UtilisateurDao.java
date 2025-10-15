@@ -19,7 +19,10 @@ public class UtilisateurDao {
             }
             entityManager.getTransaction().commit();
         }catch (Exception e){
-            e.printStackTrace();
+            System.err.println("Error in save: " + e.getMessage());
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }finally {
             entityManager.close();
         }
@@ -28,14 +31,16 @@ public class UtilisateurDao {
     public Utilisateur findByEmail(String email) {
         EntityManager em = HibernateUtil.getEntityManager();
         try {
-            Utilisateur utilisateur = em.createQuery("SELECT u FROM Utilisateur u WHERE u.email = :email", Utilisateur.class)
+            return em.createQuery("SELECT u FROM Utilisateur u WHERE u.email = :email", Utilisateur.class)
                     .setParameter("email", email)
                     .getSingleResult();
-            em.close();
-            return utilisateur;
         } catch (NoResultException e) {
-            em.close();
             return null;
+        } catch (Exception e) {
+            System.err.println("Error in findByEmail: " + e.getMessage());
+            return null;
+        } finally {
+            em.close();
         }
     }
 }
