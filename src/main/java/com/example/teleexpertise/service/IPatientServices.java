@@ -1,5 +1,6 @@
 package com.example.teleexpertise.service;
 
+import com.example.teleexpertise.dao.IConsultationDao;
 import com.example.teleexpertise.model.Patient;
 import java.util.List;
 

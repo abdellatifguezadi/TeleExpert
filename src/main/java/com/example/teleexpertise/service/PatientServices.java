@@ -1,10 +1,9 @@
 package com.example.teleexpertise.service;
 
 import com.example.teleexpertise.dao.IPatientDao;
-import com.example.teleexpertise.dao.PatientDao;
+import com.example.teleexpertise.dao.IConsultationDao;
 import com.example.teleexpertise.model.Consultation;
 import com.example.teleexpertise.model.Patient;
-import com.example.teleexpertise.dao.ConsultationDao;
 import com.example.teleexpertise.util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
@@ -12,13 +11,15 @@ import java.util.List;
 
 public class PatientServices implements IPatientServices {
 
-    private PatientDao patientDao ;
+    private IPatientDao patientDao;
+    private IConsultationDao consultationDao;
 
-    public PatientServices(PatientDao patientDao) {
+    public PatientServices(IPatientDao patientDao, IConsultationDao consultationDao) {
         this.patientDao =  patientDao;
+        this.consultationDao = consultationDao;
     }
 
-    public List <Patient> getAllPatients() {
+    public List<Patient> getAllPatients() {
         List<Patient> patients = patientDao.getAllPatients();
 
         if (patients.isEmpty()) {
@@ -33,7 +34,7 @@ public class PatientServices implements IPatientServices {
     }
 
 
-    public List <Patient> getAllPatientsEnAttente() {
+    public List<Patient> getAllPatientsEnAttente() {
         List<Patient> patients = patientDao.getPatientsEnAttente();
 
         if (patients.isEmpty()) {
@@ -42,8 +43,8 @@ public class PatientServices implements IPatientServices {
         return patients;
     }
 
+    @Override
     public void changeStatus(Patient patient) {
-        ConsultationDao consultationDao = new ConsultationDao();
         EntityManager entityManager = HibernateUtil.getEntityManager();
         entityManager.getTransaction().begin();
         List<Consultation> consultations = consultationDao.getConsultationsById(patient.getId());
