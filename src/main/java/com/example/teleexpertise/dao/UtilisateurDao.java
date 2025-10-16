@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 
-public class UtilisateurDao {
+public class UtilisateurDao implements IUtilisateurDao {
 
     public void save(Utilisateur utilisateur) {
         EntityManager entityManager = HibernateUtil.getEntityManager();

@@ -1,27 +1,23 @@
 package com.example.teleexpertise.servlet;
 
-import com.example.teleexpertise.dao.UtilisateurDao;
-import com.example.teleexpertise.model.*;
-import com.example.teleexpertise.dao.CreneauDao;
+import com.example.teleexpertise.service.IRegisterService;
+import com.example.teleexpertise.service.RegisterService;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-    private UtilisateurDao utilisateurDao;
+    private IRegisterService registerService;
 
     @Override
     public void init() {
-        utilisateurDao = new UtilisateurDao();
+        registerService = new RegisterService();
     }
 
     @Override
@@ -37,57 +33,18 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("motDePasse");
         String role = req.getParameter("role");
 
-        String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-
-        Utilisateur user;
-        switch (role.toUpperCase()) {
-            case "INFIRMIER":
-                user = new Infirmier();
-                user.setType_medecin(String.valueOf(Utilisateur.Role.INFIRMIER));
-                break;
-            case "GENERALISTE":
-                user = new MedecinGeneraliste();
-                user.setType_medecin(String.valueOf(Utilisateur.Role.GENERALISTE));
-                break;
-            case "SPECIALISTE":
-                user = new MedecinSpecialiste();
-                user.setType_medecin(String.valueOf(Utilisateur.Role.SPECIALISTE));
-                break;
-            default:
-                user = new Infirmier();
-                user.setType_medecin(String.valueOf(Utilisateur.Role.INFIRMIER));
-                break;
-        }
-
-        user.setNom(nom);
-        user.setPrenom(prenom);
-        user.setEmail(email);
-        user.setMotDePasse(hash);
-        user.setRole(Utilisateur.Role.valueOf(role.toUpperCase()));
-
         try {
-            utilisateurDao.save(user);
-            if (user instanceof MedecinSpecialiste) {
-                CreneauDao creneauDao = new CreneauDao();
-                MedecinSpecialiste specialiste = (MedecinSpecialiste) user;
-                LocalDate today = LocalDate.now();
-                LocalTime[] startTimes = {
-                    LocalTime.of(9, 0),
-                    LocalTime.of(9, 30),
-                    LocalTime.of(10, 0),
-                    LocalTime.of(10, 30),
-                    LocalTime.of(11, 0),
-                    LocalTime.of(11, 30)
-                };
-                for (LocalTime start : startTimes) {
-                    Creneau creneau = new Creneau();
-                    creneau.setMedecinSpecialiste(specialiste);
-                    creneau.setDateHeureDebut(LocalDateTime.of(today, start));
-                    creneau.setDateHeureFin(LocalDateTime.of(today, start.plusMinutes(30)));
-                    creneau.setStatus(Creneau.Status.DISPONIBLE);
-                    creneauDao.save(creneau);
-                }
+            List<String> errors = registerService.register(nom, prenom, email, password, role);
+            if (errors != null && !errors.isEmpty()) {
+                req.setAttribute("errors", errors);
+                req.setAttribute("nom", nom);
+                req.setAttribute("prenom", prenom);
+                req.setAttribute("email", email);
+                req.setAttribute("role", role);
+                req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+                return;
             }
+
             resp.sendRedirect("index.jsp");
         } catch (Exception e) {
             req.setAttribute("error", "Erreur lors de l'inscription: " + e.getMessage());
