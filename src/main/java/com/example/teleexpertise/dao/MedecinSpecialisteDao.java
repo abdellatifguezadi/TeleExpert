@@ -47,8 +47,22 @@ public class MedecinSpecialisteDao implements IMedecinSpecialisteDao {
                     .getResultList();
         } catch (Exception e) {
             System.err.println("Error in findByTarif: " + e.getMessage());
+            return Collections.emptyList();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public MedecinSpecialiste findById(Long id) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            return entityManager.find(MedecinSpecialiste.class, id);
+        } catch (Exception e) {
+            System.err.println("Error in findById: " + e.getMessage());
             return null;
+        } finally {
+            entityManager.close();
         }
     }
 }
-

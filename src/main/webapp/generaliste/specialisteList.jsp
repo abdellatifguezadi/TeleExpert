@@ -13,6 +13,14 @@
 <body class="bg-gray-100 min-h-screen">
     <div class="max-w-4xl mx-auto py-8">
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-700">Liste des Spécialistes</h2>
+
+        <!-- Success message -->
+        <c:if test="${param.success == 'reservation'}">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 text-center">
+                <strong>Succès!</strong> Votre réservation a été effectuée avec succès.
+            </div>
+        </c:if>
+
         <form method="post" action="" class="flex flex-col sm:flex-row items-center gap-4 mb-8 justify-center">
             <input type="text" name="specialite" id="specialite" placeholder="Filtrer par spécialité" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
             <input type="text" name="tarif" id="tarif" placeholder="Filtrer par tarif" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
@@ -53,7 +61,12 @@
                                                     <c:choose>
                                                         <c:when test="${creneau.status == 'DISPONIBLE'}">
                                                             <span class="text-green-600 font-semibold mr-2">Disponible</span>
-                                                            <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Réserver</button>
+                                                            <button
+                                                                type="button"
+                                                                onclick="openReservationModal('${creneau.id}', '${specialiste.id}', '${specialiste.nom}')"
+                                                                class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+                                                                Réserver
+                                                            </button>
                                                         </c:when>
                                                         <c:when test="${creneau.status == 'RESERVE'}">
                                                             <span class="text-red-600 font-semibold mr-2">Réservé</span>
@@ -80,6 +93,58 @@
                 </div>
             </c:forEach>
         </div>
+
+        <!-- Reservation Modal Form -->
+        <div id="reservation-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full mx-4 relative">
+                <button onclick="closeReservationModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+                <h3 class="text-xl font-bold text-blue-700 mb-4">Demande d'Expertise Médicale</h3>
+                <p class="text-gray-600 mb-4">Spécialiste: <span id="specialist-name" class="font-semibold"></span></p>
+
+                <form id="reservation-form" method="post" action="${pageContext.request.contextPath}/generaliste/reserve-creneau">
+                    <input type="hidden" id="creneau-id-input" name="creneauId" value="">
+                    <input type="hidden" id="specialiste-id-input" name="specialisteId" value="">
+                    <input type="hidden" name="consultationId" value="${param.consultationId}">
+
+                    <div class="mb-4">
+                        <label for="question" class="block text-sm font-medium text-gray-700 mb-2">Question médicale *</label>
+                        <textarea
+                            id="question"
+                            name="question"
+                            rows="4"
+                            placeholder="Décrivez votre question ou demande d'avis médical..."
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                            required></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="priorite" class="block text-sm font-medium text-gray-700 mb-2">Priorité</label>
+                        <select
+                            id="priorite"
+                            name="priorite"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="NORMALE">Normale</option>
+                            <option value="URGENTE">Urgente</option>
+                            <option value="NON_URGENTE">Non urgente</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-3 justify-end">
+                        <button
+                            type="button"
+                            onclick="closeReservationModal()"
+                            class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                            Annuler
+                        </button>
+                        <button
+                            type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                            Confirmer la réservation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <script>
         function openCreneauModal(id) {
@@ -88,6 +153,28 @@
         function closeCreneauModal(id) {
             document.getElementById('creneau-modal-' + id).classList.add('hidden');
         }
+
+        function openReservationModal(creneauId, specialisteId, specialisteName) {
+
+            document.getElementById('creneau-id-input').value = creneauId;
+            document.getElementById('specialiste-id-input').value = specialisteId;
+            document.getElementById('specialist-name').textContent = specialisteName;
+
+            document.getElementById('question').value = '';
+            document.getElementById('priorite').value = 'NORMALE';
+
+            document.getElementById('reservation-modal').classList.remove('hidden');
+        }
+
+        function closeReservationModal() {
+            document.getElementById('reservation-modal').classList.add('hidden');
+        }
+
+        document.getElementById('reservation-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeReservationModal();
+            }
+        });
     </script>
 </body>
 </html>

@@ -26,4 +26,9 @@ public class MedecinSpecialisteService implements IMedecinSpecialisteService {
         return medecinSpecialisteDao.findByTarif(tarif);
     }
 
+    @Override
+    public MedecinSpecialiste findById(Long id) {
+        return medecinSpecialisteDao.findById(id);
+    }
+
 }

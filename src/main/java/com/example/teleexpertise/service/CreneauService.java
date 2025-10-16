@@ -18,4 +18,14 @@ public class CreneauService implements ICreneauService {
     public List<Creneau> creneauxByMedecinId(long medecinId) {
         return creneauDao.findBySpecialisteId(medecinId);
     }
+
+    @Override
+    public Creneau findById(Long id) {
+        return creneauDao.findById(id);
+    }
+
+    @Override
+    public void updateCreneauStatus(Long creneauId, String status) {
+        creneauDao.updateStatus(creneauId, status);
+    }
 }

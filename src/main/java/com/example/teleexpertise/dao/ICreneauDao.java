@@ -8,4 +8,6 @@ public interface ICreneauDao {
 
     void save(Creneau creneau);
     List<Creneau> findBySpecialisteId(Long specialisteId);
+    Creneau findById(Long id);
+    boolean updateStatus(Long creneauId, String status);
 }

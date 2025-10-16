@@ -40,5 +40,10 @@ public class ConsultationService implements IConsultationService {
         }
     }
 
+    @Override
+    public Consultation getConsultationById(Long consultationId) {
+        return  consultationDao.getConsultationById(consultationId);
+    }
+
 
 }

@@ -7,4 +7,5 @@ public interface IMedecinSpecialisteService {
     List<MedecinSpecialiste> findAll();
     List<MedecinSpecialiste> findBySpecialite(MedecinSpecialiste.Specialite specialite);
     List<MedecinSpecialiste> findByTarif(Double tarif);
+    MedecinSpecialiste findById(Long id);
 }

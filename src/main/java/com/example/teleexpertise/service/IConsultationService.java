@@ -7,5 +7,6 @@ public interface IConsultationService {
     void saveConsultation(Consultation consultation);
     List<Consultation> getConsultationsByPatientIdAndMedecin(long PatientId, long MedecinId);
     boolean updateConsultationStatus(Long consultationId, String statusStr);
+    Consultation getConsultationById(Long consultationId);
 }
 
