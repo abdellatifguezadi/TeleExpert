@@ -6,4 +6,5 @@ import java.util.List;
 public interface IMedecinSpecialisteService {
     List<MedecinSpecialiste> findAll();
     List<MedecinSpecialiste> findBySpecialite(MedecinSpecialiste.Specialite specialite);
+    List<MedecinSpecialiste> findByTarif(Double tarif);
 }

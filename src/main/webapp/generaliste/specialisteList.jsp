@@ -15,6 +15,7 @@
         <h2 class="text-2xl font-bold mb-6 text-center text-blue-700">Liste des Spécialistes</h2>
         <form method="post" action="" class="flex flex-col sm:flex-row items-center gap-4 mb-8 justify-center">
             <input type="text" name="specialite" id="specialite" placeholder="Filtrer par spécialité" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+            <input type="text" name="tarif" id="tarif" placeholder="Filtrer par tarif" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"/>
             <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Filtrer</button>
         </form>
         <!-- Nouvelle grille de cartes -->
@@ -24,6 +25,7 @@
                     <div class="text-blue-700 font-bold text-lg mb-2">${specialiste.nom}</div>
                     <div class="text-gray-600"><span class="font-semibold">ID :</span> ${specialiste.id}</div>
                     <div class="text-gray-600"><span class="font-semibold">Spécialité :</span> ${specialiste.specialite}</div>
+                    <div class="text-gray-600"><span class="font-semibold">Tarif :</span> ${specialiste.tarif} €</div>
                     <button
                         class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition font-semibold"
                         onclick="openCreneauModal('${specialiste.id}')"

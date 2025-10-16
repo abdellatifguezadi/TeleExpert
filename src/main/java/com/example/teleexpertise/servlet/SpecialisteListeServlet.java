@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +47,7 @@ public class SpecialisteListeServlet extends HttpServlet {
             creneauxParSpecialiste.put(specialiste.getId(), creneaux);
         }
 
+
         request.setAttribute("specialistes", specialistes);
         request.setAttribute("creneauxParSpecialiste", creneauxParSpecialiste);
         request.getRequestDispatcher("/generaliste/specialisteList.jsp").forward(request, response);
@@ -57,18 +57,38 @@ public class SpecialisteListeServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String specialiteParam = request.getParameter("specialite");
+        String tarifParam = request.getParameter("tarif");
+
         MedecinSpecialiste.Specialite specialite = null;
+        Double tarif = null;
+
         if (specialiteParam != null && !specialiteParam.isEmpty()) {
             try {
                 specialite = MedecinSpecialiste.Specialite.valueOf(specialiteParam.toUpperCase());
             } catch (IllegalArgumentException e) {
-                specialite = null;
             }
         }
 
+        if (tarifParam != null && !tarifParam.isEmpty()) {
+            try {
+                tarif = Double.parseDouble(tarifParam);
+            } catch (NumberFormatException e) {
+            }
+        }
+
+        final MedecinSpecialiste.Specialite finalSpecialite = specialite;
+        final Double finalTarif = tarif;
+
         List<MedecinSpecialiste> specialistes;
-        if (specialite != null) {
+
+        if (specialite != null && tarif != null) {
+            specialistes = medecinSpecialisteService.findAll().stream()
+                .filter(s -> s.getSpecialite() == finalSpecialite && s.getTarif().equals(finalTarif))
+                .collect(java.util.stream.Collectors.toList());
+        } else if (specialite != null) {
             specialistes = medecinSpecialisteService.findBySpecialite(specialite);
+        } else if (tarif != null) {
+            specialistes = medecinSpecialisteService.findByTarif(tarif);
         } else {
             specialistes = medecinSpecialisteService.findAll();
         }

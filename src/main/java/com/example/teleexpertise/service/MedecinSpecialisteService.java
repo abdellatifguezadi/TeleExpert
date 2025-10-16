@@ -20,4 +20,10 @@ public class MedecinSpecialisteService implements IMedecinSpecialisteService {
     public List<MedecinSpecialiste> findBySpecialite(MedecinSpecialiste.Specialite specialite) {
         return medecinSpecialisteDao.findBySpecialite(specialite);
     }
+
+    @Override
+    public List<MedecinSpecialiste> findByTarif(Double tarif) {
+        return medecinSpecialisteDao.findByTarif(tarif);
+    }
+
 }

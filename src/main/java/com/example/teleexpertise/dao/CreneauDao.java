@@ -24,7 +24,6 @@ public class CreneauDao implements ICreneauDao {
         }
     }
 
-
     public List<Creneau> findBySpecialisteId(Long specialisteId){
         EntityManager entityManager = HibernateUtil.getEntityManager();
         try {
@@ -37,4 +36,5 @@ public class CreneauDao implements ICreneauDao {
             return null;
         }
     }
+
 }

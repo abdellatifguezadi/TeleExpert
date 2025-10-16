@@ -3,8 +3,6 @@ package com.example.teleexpertise.dao;
 import com.example.teleexpertise.model.MedecinSpecialiste;
 import com.example.teleexpertise.util.HibernateUtil;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,4 +35,20 @@ public class MedecinSpecialisteDao implements IMedecinSpecialisteDao {
             return Collections.emptyList();
         }
     }
+
+
+    @Override
+    public List<MedecinSpecialiste> findByTarif(Double tarif) {
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            return  entityManager.createQuery(
+                "SELECT m FROM MedecinSpecialiste m WHERE m.tarif <= :tarif", MedecinSpecialiste.class)
+                    .setParameter("tarif", tarif)
+                    .getResultList();
+        } catch (Exception e) {
+            System.err.println("Error in findByTarif: " + e.getMessage());
+            return null;
+        }
+    }
 }
+

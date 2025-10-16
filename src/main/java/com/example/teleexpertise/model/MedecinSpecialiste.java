@@ -30,4 +30,5 @@ public class MedecinSpecialiste extends Utilisateur {
     public void setDureeConsultation(Integer dureeConsultation) { this.dureeConsultation = dureeConsultation; }
     public List<Creneau> getCreneauxDisponibles() { return creneauxDisponibles; }
     public void setCreneauxDisponibles(List<Creneau> creneauxDisponibles) { this.creneauxDisponibles = creneauxDisponibles; }
+
 }
