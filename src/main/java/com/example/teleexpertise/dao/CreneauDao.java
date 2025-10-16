@@ -12,8 +12,27 @@ public class CreneauDao implements ICreneauDao {
             em.getTransaction().begin();
             em.persist(creneau);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            System.err.println("Error in save: " + e.getMessage());
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
         } finally {
             em.close();
+        }
+    }
+
+
+    public Creneau findBySpecialisteId(Long specialisteId){
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        try {
+            return  entityManager.createQuery(
+                "SELECT c FROM Creneau c WHERE c.medecinSpecialiste.id = :specialisteId", Creneau.class)
+                .setParameter("specialisteId", specialisteId)
+                .getSingleResult();
+        } catch (Exception e) {
+            System.err.println("Error in findBySpecialisteId: " + e.getMessage());
+            return null;
         }
     }
 }
