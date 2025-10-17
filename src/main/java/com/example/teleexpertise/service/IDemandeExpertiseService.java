@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface IDemandeExpertiseService {
     void saveDemandeExpertise(DemandeExpertise demandeExpertise);
+
     List<DemandeExpertise> getDemandesForSpecialiste(Long medecinSpecialisteId);
+    boolean respondToDemande(Long demandeId, Long medecinSpecialisteId, String avisMedecin, String recommandations);
 }

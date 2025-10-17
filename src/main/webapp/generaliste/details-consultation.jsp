@@ -57,12 +57,14 @@
                                                 <option value="EN_ATTENTE" ${consultation.status == null || consultation.status == 'EN_ATTENTE' ? 'selected' : ''}>En attente</option>
                                                 <option value="TERMINEE" ${consultation.status == 'TERMINEE' ? 'selected' : ''}>Clôturée</option>
                                                 <option value="EN_ATTENTE_AVIS_SPECIALISTE" ${consultation.status == 'EN_ATTENTE_AVIS_SPECIALISTE' ? 'selected' : ''}>En attente d'expertise</option>
+                                                <option value="AVIS_SPECIALISTE_RECU" ${consultation.status == 'AVIS_SPECIALISTE_RECU' ? 'selected' : ''}>Avis Reçu</option>
+
                                             </select>
                                             <input type="hidden" name="consultationId" value="${consultation.id}" />
                                             <input type="hidden" name="patientId" value="${patientId}" />
                                             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded font-bold shadow transition text-xs align-middle leading-none self-center" style="margin-top:0;">Valider</button>
                                         </form>
-                                        <c:if test="${consultation.status != 'EN_ATTENTE_AVIS_SPECIALISTE' && consultation.status != 'TERMINEE'}">
+                                        <c:if test="${consultation.status != 'EN_ATTENTE_AVIS_SPECIALISTE' && consultation.status != 'TERMINEE' && consultation.status != 'AVIS_SPECIALISTE_RECU'}">
                                             <form method="get" action="${pageContext.request.contextPath}/generaliste/SpecialisteList" class="inline">
                                                 <input type="hidden" name="consultationId" value="${consultation.id}" />
                                                 <input type="hidden" name="patientId" value="${patientId}" />

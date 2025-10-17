@@ -34,8 +34,9 @@ public class Consultation {
     private Creneau creneau;
 
     public enum Status {
-        EN_ATTENTE, TERMINEE, EN_ATTENTE_AVIS_SPECIALISTE
+        EN_ATTENTE, TERMINEE, EN_ATTENTE_AVIS_SPECIALISTE, AVIS_SPECIALISTE_RECU
     }
+
 
 
 

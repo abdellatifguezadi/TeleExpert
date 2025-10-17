@@ -19,6 +19,15 @@
     </strong></p>
 </header>
 
+<!-- Flash message -->
+<c:if test="${not empty message}">
+    <div class="max-w-5xl mx-auto mt-4">
+        <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded">
+            ${message}
+        </div>
+    </div>
+</c:if>
+
 <!-- Contenu principal -->
 <main class="max-w-5xl mx-auto mt-8 space-y-8">
 
@@ -121,7 +130,7 @@
 <div id="modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
         <h2 class="text-2xl font-semibold mb-4 text-blue-700">Repondre a une Expertise</h2>
-        <form class="space-y-4" method="post" action="${pageContext.request.contextPath}/demande-expertise/respond">
+        <form class="space-y-4" method="post" action="${pageContext.request.contextPath}/specialiste/dashboard">
             <input type="hidden" id="modal-demande-id" name="demandeId" />
             <div>
                 <label for="modal-patient" class="block text-gray-700">Patient</label>

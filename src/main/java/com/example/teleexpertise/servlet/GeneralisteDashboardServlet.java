@@ -83,6 +83,7 @@ public class GeneralisteDashboardServlet extends HttpServlet {
             consultation.setObservations(observations);
             consultation.setDiagnostic(diagnostic);
             consultation.setTraitement(traitement);
+            consultation.setCout(150.0);
             consultation.setStatus(Consultation.Status.EN_ATTENTE);
             ConsultationDao consultationDao = new ConsultationDao();
             ConsultationService consultationService = new ConsultationService(consultationDao);
