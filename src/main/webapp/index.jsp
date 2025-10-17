@@ -1,8 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ include file="/WEB-INF/jsp/includes/header.jspf" %>--%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TeleExpertise - Accueil</title>
+    <meta charset="UTF-8">
+    <title>TeleExpertise - Home</title>
     <style>
         body {
             font-family: Arial, sans-serif;

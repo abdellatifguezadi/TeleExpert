@@ -1,0 +1,16 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<div class="w-full bg-white shadow-sm py-3">
+    <div class="max-w-5xl mx-auto px-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <a href="${pageContext.request.contextPath}/" class="text-blue-700 font-bold">TeleExpertise</a>
+            <c:if test="${not empty sessionScope.userEmail}">
+                <span class="text-gray-600">Connecte en tant que: ${sessionScope.userEmail}</span>
+            </c:if>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="${pageContext.request.contextPath}/dashboard" class="bg-blue-600 text-white px-3 py-1 rounded">Dashboard</a>
+            <a href="${pageContext.request.contextPath}/logout" class="bg-red-500 text-white px-3 py-1 rounded">Logout</a>
+        </div>
+    </div>
+</div>
+

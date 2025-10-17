@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/jsp/includes/header.jspf" %>
+
 <html>
 <head>
     <title>Ajouter/Modifier Dossier Médical</title>

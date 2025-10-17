@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +21,7 @@
             </div>
         </c:if>
 
-<%--        <% if (request.getAttribute("errorMessage") != null) { %>--%>
-<%--            <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded mb-4">--%>
-<%--                <%= request.getAttribute("errorMessage") %>--%>
-<%--            </div>--%>
-<%--        <% } %>--%>
-
-        <form action="login" method="post">
+        <form action="<c:url value='/login'/>" method="post">
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-gray-800 font-medium">Email Address</label>
                 <input type="email" id="email" name="email" required
@@ -49,7 +42,7 @@
         </form>
 
         <div class="text-center mt-6 pt-6 border-t border-gray-200">
-            <p>Don't have an account? <a href="register" class="text-blue-500 no-underline font-medium hover:underline">Create one here</a></p>
+            <p>Don't have an account? <a href="<c:url value='/register'/>" class="text-blue-500 no-underline font-medium hover:underline">Create one here</a></p>
         </div>
     </div>
 </body>

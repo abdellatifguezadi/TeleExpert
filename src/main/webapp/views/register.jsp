@@ -23,7 +23,6 @@
             </div>
         </c:if>
 
-        <!-- Summary of validation errors (List<String>) -->
         <c:if test="${not empty errors}">
             <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded mb-4">
                 <strong>Veuillez corriger les erreurs suivantes :</strong>
@@ -41,7 +40,7 @@
             </div>
         </c:if>
 
-        <form action="${pageContext.request.contextPath}/register" method="post">
+        <form action="<c:url value='/register'/>" method="post">
             <div class="flex gap-4 md:flex-row flex-col">
                 <div class="flex-1 mb-6">
                     <label for="nom" class="block mb-2 text-gray-800 font-medium">First Name *</label>
@@ -71,7 +70,7 @@
             <div class="flex gap-4 md:flex-row flex-col">
                 <div class="flex-1 mb-6">
                     <label for="motDePasse" class="block mb-2 text-gray-800 font-medium">Password *</label>
-                    <input type="password" id="motDePasse" name="motDePasse" minlength="8"
+                    <input type="password" id="motDePasse" name="motDePasse"
                            placeholder="Enter your password"
                            class="w-full px-3 py-3 border-2 border-gray-200 rounded-md text-base transition-colors duration-300 focus:outline-none focus:border-blue-500">
                 </div>
@@ -96,7 +95,7 @@
         </form>
 
         <div class="text-center mt-6 pt-6 border-t border-gray-200">
-            <p>Already have an account? <a href="login" class="text-blue-500 no-underline font-medium hover:underline">Sign in here</a></p>
+            <p>Already have an account? <a href="<c:url value='/login'/>" class="text-blue-500 no-underline font-medium hover:underline">Sign in here</a></p>
         </div>
     </div>
 

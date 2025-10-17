@@ -4,6 +4,7 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/jsp/includes/header.jspf" %>
 
 <html>
 <head>
@@ -29,7 +30,7 @@
                 <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider">Nom</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Consultation</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Signes Vitaux</th>
-                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Télé-expertise</th>
+<%--                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Télé-expertise</th>--%>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Détails</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Dossier</th>
             </tr>
@@ -81,11 +82,11 @@
 
 
                 </td>
-                <td class="py-4 px-4 text-center">
-                    <button  onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A2 2 0 0 1 22 9.618v4.764a2 2 0 0 1-2.447 1.894L15 14M4 6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Télé
-                    </button>
-                </td>
+<%--                <td class="py-4 px-4 text-center">--%>
+<%--                    <button  onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">--%>
+<%--                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A2 2 0 0 1 22 9.618v4.764a2 2 0 0 1-2.447 1.894L15 14M4 6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Télé--%>
+<%--                    </button>--%>
+<%--                </td>--%>
                 <td class="py-4 px-4 text-center">
                     <form action="<%= request.getContextPath() %>/generaliste/consultation" method="get" style="display:inline;">
                         <input type="hidden" name="patientId" value="${patient.id}" />
@@ -216,15 +217,15 @@
 
 
 <!-- Télé-expertise Modal (static placeholder) -->
-<div id="teleModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">
-    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">
-        <h3 class="text-lg font-bold mb-4">Télé-expertise</h3>
-        <div>
-            <p>Fonctionnalité à venir...</p>
-            <button type="button" onclick="closeModal('teleModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>
-        </div>
-    </div>
-</div>
+<%--<div id="teleModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40 flex items-center justify-center">--%>
+<%--    <div class="bg-white p-6 rounded shadow-lg w-full max-w-md">--%>
+<%--        <h3 class="text-lg font-bold mb-4">Télé-expertise</h3>--%>
+<%--        <div>--%>
+<%--            <p>Fonctionnalité à venir...</p>--%>
+<%--            <button type="button" onclick="closeModal('teleModal')" class="mt-4 px-4 py-2 rounded border">Fermer</button>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
 <script>
     function openModal(id) {

@@ -43,7 +43,7 @@ public class RegisterService implements IRegisterService {
             errors.add("Le mot de passe est requis");
         } else {
             if (password.length() < 6) {
-                errors.add("Le mot de passe doit contenir au moins 8 caractères");
+                errors.add("Le mot de passe doit contenir au moins 6 caractères");
             }
         }
 
