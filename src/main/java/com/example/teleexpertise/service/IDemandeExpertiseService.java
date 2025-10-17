@@ -10,4 +10,5 @@ public interface IDemandeExpertiseService {
 
     List<DemandeExpertise> getDemandesForSpecialiste(Long medecinSpecialisteId);
     boolean respondToDemande(Long demandeId, Long medecinSpecialisteId, String avisMedecin, String recommandations);
+    List<DemandeExpertise> getDemandesForGeneraliste(Long medecinGeneralisteId, DemandeExpertise.Status status);
 }

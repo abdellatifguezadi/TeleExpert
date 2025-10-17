@@ -82,8 +82,8 @@ public class ConsultationServlet extends HttpServlet {
         String consultationIdStr = request.getParameter("consultationId");
         String patientIdStr = request.getParameter("patientId");
         String status = request.getParameter("status");
-
-        if (consultationIdStr != null && patientIdStr != null && status != null) {
+      //response.getWriter().println(consultationIdStr+" "+ patientIdStr+" "+status);
+       if (consultationIdStr != null && patientIdStr != null && status != null) {
             try {
                 long consultationId = Long.parseLong(consultationIdStr);
                 int patientId = Integer.parseInt(patientIdStr);

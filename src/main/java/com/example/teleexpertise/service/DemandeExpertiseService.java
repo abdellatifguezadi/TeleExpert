@@ -40,4 +40,9 @@ public class DemandeExpertiseService implements IDemandeExpertiseService{
 
         return demandeExpertiseDao.mergeDemandeAndConsultation(demande, consultation);
     }
+
+    @Override
+    public List<DemandeExpertise> getDemandesForGeneraliste(Long medecinGeneralisteId, DemandeExpertise.Status status) {
+        return demandeExpertiseDao.findByMedecinGeneralisteIdAndStatus(medecinGeneralisteId, status);
+    }
 }

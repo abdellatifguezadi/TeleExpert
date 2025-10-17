@@ -1,7 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.example.teleexpertise.model.Patient" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/jsp/includes/header.jspf" %>
@@ -21,6 +18,9 @@
             </svg>
             <h2 class="text-3xl font-bold text-white">File d'attente des patients</h2>
         </div>
+        <div>
+            <a href="<%= request.getContextPath() %>/generaliste/demandes" class="bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold hover:opacity-90">Voir demandes d'expertise</a>
+        </div>
     </div>
     <div class="overflow-x-auto bg-white shadow-xl rounded-2xl border border-blue-100">
         <table class="w-full divide-y divide-blue-100 rounded-2xl overflow-hidden">
@@ -30,7 +30,6 @@
                 <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider">Nom</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Consultation</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Signes Vitaux</th>
-<%--                <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Télé-expertise</th>--%>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Détails</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Dossier</th>
             </tr>
@@ -38,13 +37,6 @@
             <tbody class="divide-y divide-blue-50">
 
 
-
-<%--            <%--%>
-<%--                List<Patient> patients = (List<Patient>) request.getAttribute("patients");--%>
-<%--                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");--%>
-<%--                if (patients != null && !patients.isEmpty()) {--%>
-<%--                    for (Patient patient : patients) {--%>
-<%--            %>--%>
 
             <c:if test="${not empty patients}">
             <c:forEach var="patient" items="${patients}">
@@ -82,11 +74,7 @@
 
 
                 </td>
-<%--                <td class="py-4 px-4 text-center">--%>
-<%--                    <button  onclick="openModal('teleModal')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">--%>
-<%--                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A2 2 0 0 1 22 9.618v4.764a2 2 0 0 1-2.447 1.894L15 14M4 6v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Télé--%>
-<%--                    </button>--%>
-<%--                </td>--%>
+
                 <td class="py-4 px-4 text-center">
                     <form action="<%= request.getContextPath() %>/generaliste/consultation" method="get" style="display:inline;">
                         <input type="hidden" name="patientId" value="${patient.id}" />

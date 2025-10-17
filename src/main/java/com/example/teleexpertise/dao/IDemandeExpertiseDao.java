@@ -10,5 +10,5 @@ public interface IDemandeExpertiseDao {
     List<DemandeExpertise> findByMedecinSpecialisteId(Long medecinSpecialisteId);
     DemandeExpertise getDemandeById(Long demandeId);
     boolean mergeDemandeAndConsultation(DemandeExpertise demande, Consultation consultation);
-
+    List<DemandeExpertise> findByMedecinGeneralisteIdAndStatus(Long medecinGeneralisteId, DemandeExpertise.Status status);
 }

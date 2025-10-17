@@ -91,4 +91,28 @@ public class DemandeExpertiseDao implements IDemandeExpertiseDao{
             em.close();
         }
     }
+
+    @Override
+    public List<DemandeExpertise> findByMedecinGeneralisteIdAndStatus(Long medecinGeneralisteId, DemandeExpertise.Status status) {
+        EntityManager em = HibernateUtil.getEntityManager();
+        try {
+            String jpql = "SELECT DISTINCT d FROM DemandeExpertise d " +
+                    "LEFT JOIN FETCH d.consultation c " +
+                    "LEFT JOIN FETCH c.patient p " +
+                    "LEFT JOIN FETCH c.medecinGeneraliste mg " +
+                    "LEFT JOIN FETCH d.medecinSpecialiste ms " +
+                    "WHERE c.medecinGeneraliste.id = :mgId AND d.status = :status " +
+                    "ORDER BY d.dateDemande DESC";
+            TypedQuery<DemandeExpertise> query = em.createQuery(jpql, DemandeExpertise.class)
+                    .setParameter("mgId", medecinGeneralisteId)
+                    .setParameter("status", status);
+            List<DemandeExpertise> results = query.getResultList();
+            return results != null ? results : new ArrayList<>();
+        } catch (Exception e) {
+            System.err.println("Error in findByMedecinGeneralisteIdAndStatus: " + e.getMessage());
+            return new ArrayList<>();
+        } finally {
+            em.close();
+        }
+    }
 }
