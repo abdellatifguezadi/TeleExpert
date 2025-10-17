@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/jsp/includes/header.jspf" %>
 <!DOCTYPE html>
 <html>
@@ -101,7 +101,7 @@
                             </c:when>
                             <c:otherwise>
                                 <tr>
-                                    <td colspan="8" class="px-4 py-12 text-center text-gray-500">
+                                    <td colspan="9" class="px-4 py-12 text-center text-gray-500">
                                         <div>
                                             <h3 class="text-lg font-medium mb-2">Aucun patient enregistré</h3>
                                             <p class="text-sm">Commencez par ajouter votre premier patient en cliquant sur le bouton "Ajouter un Patient"</p>

@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("MedecinGeneraliste")
 public class MedecinGeneraliste extends Utilisateur {
-    @OneToMany(mappedBy = "medecinGeneraliste")
+    @OneToMany(mappedBy = "medecinGeneraliste" , cascade = CascadeType.ALL)
     private List<Consultation> consultations;
 
     public MedecinGeneraliste() {

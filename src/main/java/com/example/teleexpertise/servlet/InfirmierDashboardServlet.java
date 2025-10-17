@@ -4,9 +4,9 @@ package com.example.teleexpertise.servlet;
 import com.example.teleexpertise.dao.IPatientDao;
 import com.example.teleexpertise.dao.PatientDao;
 import com.example.teleexpertise.dao.UtilisateurDao;
-import com.example.teleexpertise.model.DossierMedical;
 import com.example.teleexpertise.model.Patient;
 import com.example.teleexpertise.model.Utilisateur;
+import com.example.teleexpertise.model.Infirmier;
 import com.example.teleexpertise.service.IPatientServices;
 import com.example.teleexpertise.service.PatientServices;
 import jakarta.servlet.ServletException;
@@ -56,6 +56,21 @@ public class InfirmierDashboardServlet extends HttpServlet {
 
     protected  void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("userEmail") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        String userEmail = (String) session.getAttribute("userEmail");
+        UtilisateurDao utilisateurDao = new UtilisateurDao();
+        Utilisateur utilisateur = utilisateurDao.findByEmail(userEmail);
+
+        if (utilisateur == null || !Utilisateur.Role.INFIRMIER.toString().equals(utilisateur.getType_medecin())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String dateNaissance = request.getParameter("dateNaissance");
@@ -74,9 +89,7 @@ public class InfirmierDashboardServlet extends HttpServlet {
         patient.setFileAttente(Boolean.valueOf(fileAttente));
         patient.setMutuelle(mutuelle);
         patient.setNumSecu(numSecu);
-
-
-
+        patient.setInfirmier((Infirmier) utilisateur);
 
         try {
             patientServices.savePatient(patient);

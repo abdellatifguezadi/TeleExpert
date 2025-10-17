@@ -23,9 +23,15 @@ public class Patient {
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private DossierMedical dossierMedical;
 
+    @ManyToOne
+    @JoinColumn(name = "infirmier_id")
+    private Infirmier infirmier;
+
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private SignesVitaux signesVitaux;
 
+    public Infirmier getInfirmier() {return infirmier;}
+    public void setInfirmier(Infirmier infirmier) {this.infirmier = infirmier;}
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNom() { return nom; }
@@ -48,6 +54,7 @@ public class Patient {
     public void setDossierMedical(DossierMedical dossierMedical) { this.dossierMedical = dossierMedical; }
     public SignesVitaux getSignesVitaux() { return signesVitaux; }
     public void setSignesVitaux(SignesVitaux signesVitaux) { this.signesVitaux = signesVitaux; }
+
 
 
 

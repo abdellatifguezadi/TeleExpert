@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/jsp/includes/header.jspf" %>
@@ -28,6 +28,7 @@
             <tr>
                 <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider rounded-tl-2xl">ID</th>
                 <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider">Nom</th>
+                <th class="py-4 px-4 text-left text-sm font-bold text-white uppercase tracking-wider">Infirmier</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Consultation</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Signes Vitaux</th>
                 <th class="py-4 px-4 text-center text-sm font-bold text-white uppercase tracking-wider">Détails</th>
@@ -44,6 +45,16 @@
                 <td name="patientId" class="py-4 px-4 text-gray-700 font-mono font-bold">${patient.id} </td>
                 <td class="py-4 px-4 font-semibold text-gray-900 flex items-center gap-3">
                     ${patient.nom} ${patient.prenom}
+                </td>
+                <td class="py-4 px-4 text-gray-700">
+                    <c:choose>
+                        <c:when test="${not empty patient.infirmier}">
+                            ${patient.infirmier.nom} ${patient.infirmier.prenom}
+                        </c:when>
+                        <c:otherwise>
+                            Non assigné
+                        </c:otherwise>
+                    </c:choose>
                 </td>
                 <td class="py-4 px-4 text-center">
                     <button  onclick="openConsultationModal(${patient.id})" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-xs font-bold shadow flex items-center gap-1 mx-auto">
@@ -71,7 +82,6 @@
 
                     <input type="hidden" id="signes-${patient.id}-poids"
                            value="${not empty patient.signesVitaux ? patient.signesVitaux.poids : 'Non renseigné'}" />
-
 
                 </td>
 

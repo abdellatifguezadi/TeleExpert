@@ -11,7 +11,7 @@ public class MedecinSpecialiste extends Utilisateur {
     private Double tarif;
     private Integer dureeConsultation;
 
-    @OneToMany(mappedBy = "medecinSpecialiste")
+    @OneToMany(mappedBy = "medecinSpecialiste",cascade = CascadeType.ALL)
     private List<Creneau> creneauxDisponibles;
 
     public MedecinSpecialiste() {
