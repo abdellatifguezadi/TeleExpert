@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +14,9 @@
 <!-- En-tête -->
 <header class="bg-blue-700 text-white py-6 text-center shadow-lg">
     <h1 class="text-3xl font-bold">Tableau de bord du Spécialiste</h1>
-    <p class="text-lg">Bienvenue, <strong>Dr. Ahmed (Cardiologue)</strong></p>
+    <p class="text-lg">Bienvenue, <strong>
+        ${utilisateur.nom} ${utilisateur.prenom}
+    </strong></p>
 </header>
 
 <!-- Contenu principal -->
@@ -21,25 +26,13 @@
     <section class="bg-white p-6 rounded-2xl shadow-md">
         <h2 class="text-2xl font-semibold mb-4 text-blue-700">Profil du Spécialiste</h2>
         <ul class="text-gray-700 space-y-2">
-            <li><strong>Nom :</strong> Dr. Ahmed</li>
-            <li><strong>Spécialité :</strong> Cardiologue</li>
-            <li><strong>Tarif :</strong> 400 DH</li>
-            <li><strong>Durée moyenne de consultation :</strong> 30 min</li>
+            <li><strong>Nom :</strong> ${utilisateur.nom}</li>
+            <li><strong>Spécialité :</strong> ${utilisateur.type_medecin}</li>
+            <li><strong>Tarif :</strong> ${utilisateur.tarif}</li>
+            <li><strong>Durée moyenne de consultation :</strong> ${utilisateur.dureeConsultation} min</li>
         </ul>
     </section>
 
-    <!-- Section Créneaux disponibles -->
-    <section class="bg-white p-6 rounded-2xl shadow-md">
-        <h2 class="text-2xl font-semibold mb-4 text-blue-700">Créneaux disponibles</h2>
-        <div class="space-y-2">
-            <p>09h00 - 09h30  Disponible</p>
-            <p>09h30 - 10h00  Disponible</p>
-            <p>10h00 - 10h30  Disponible</p>
-            <p>10h30 - 11h00  Reserve</p>
-            <p>11h00 - 11h30  Disponible</p>
-            <p>11h30 - 12h00  Disponible</p>
-        </div>
-    </section>
 
     <!-- Section Demandes d'expertise -->
     <section class="bg-white p-6 rounded-2xl shadow-md">
@@ -56,45 +49,67 @@
                 </tr>
                 </thead>
                 <tbody class="text-gray-700">
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="py-2 px-4">Fatima Zahra</td>
-                    <td class="py-2 px-4 text-yellow-600 font-semibold">Urgente</td>
-                    <td class="py-2 px-4">Interpretation d’un electrocardiogramme</td>
-                    <td class="py-2 px-4">En attente</td>
-                    <td class="py-2 px-4 text-center">
-                        <div class="flex flex-row items-center justify-center gap-2">
-                            <button onclick="showModal('Fatima Zahra')" class="bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700">Repondre</button>
-                            <button onclick="showConsultation('Fatima Zahra')" class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700">Voir Consultation</button>
-                            <button onclick="showSignesVitaux('Fatima Zahra')" class="bg-purple-600 text-white px-2 py-1 rounded text-xs hover:bg-purple-700">Voir Signes Vitaux</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="py-2 px-4">Youssef El Idrissi</td>
-                    <td class="py-2 px-4 text-green-600 font-semibold">Normale</td>
-                    <td class="py-2 px-4">Diagnostic d’hypertension</td>
-                    <td class="py-2 px-4">Terminee</td>
-                    <td class="py-2 px-4 text-center">
-                        <div class="flex flex-row items-center justify-center gap-2">
-                            <button disabled class="bg-gray-400 text-white px-2 py-1 rounded text-xs cursor-not-allowed">Repondre</button>
-                            <button onclick="showConsultation('Youssef El Idrissi')" class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700">Voir Consultation</button>
-                            <button onclick="showSignesVitaux('Youssef El Idrissi')" class="bg-purple-600 text-white px-2 py-1 rounded text-xs hover:bg-purple-700">Voir Signes Vitaux</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                    <td class="py-2 px-4">Sara Bensaid</td>
-                    <td class="py-2 px-4 text-red-600 font-semibold">Critique</td>
-                    <td class="py-2 px-4">evaluation d’un cas de tachycardie</td>
-                    <td class="py-2 px-4">En cours</td>
-                    <td class="py-2 px-4 text-center">
-                        <div class="flex flex-row items-center justify-center gap-2">
-                            <button onclick="showModal('Sara Bensaid')" class="bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700">Repondre</button>
-                            <button onclick="showConsultation('Sara Bensaid')" class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700">Voir Consultation</button>
-                            <button onclick="showSignesVitaux('Sara Bensaid')" class="bg-purple-600 text-white px-2 py-1 rounded text-xs hover:bg-purple-700">Voir Signes Vitaux</button>
-                        </div>
-                    </td>
-                </tr>
+                <c:choose>
+                    <c:when test="${not empty demandes}">
+                        <c:forEach var="demande" items="${demandes}">
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-2 px-4">
+                                    <c:choose>
+                                        <c:when test="${not empty demande.consultation and not empty demande.consultation.patient}">
+                                            ${demande.consultation.patient.nom} ${demande.consultation.patient.prenom}
+                                        </c:when>
+                                        <c:otherwise>-</c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td class="py-2 px-4 text-yellow-600 font-semibold">${demande.priorite}</td>
+                                <td class="py-2 px-4">${demande.question}</td>
+                                <td class="py-2 px-4">${demande.status}</td>
+                                <td class="py-2 px-4 text-center">
+                                    <div class="flex flex-row items-center justify-center gap-2">
+                                        <c:choose>
+                                            <c:when test="${demande.status == 'TERMINEE'}">
+                                                <button disabled class="bg-gray-400 text-white px-2 py-1 rounded text-xs cursor-not-allowed">Repondre</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button onclick="showModal('${demande.consultation.patient.nom} ${demande.consultation.patient.prenom}', ${demande.id})" class="bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700">Repondre</button>
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <c:if test="${not empty demande.consultation and not empty demande.consultation.patient}">
+                                            <button onclick="openConsultationModal(this)"
+                                                    class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700"
+                                                    data-date="${fn:escapeXml(demande.consultation.dateConsultation)}"
+                                                    data-motif="${fn:escapeXml(demande.consultation.motif)}"
+                                                    data-observations="${fn:escapeXml(demande.consultation.observations)}"
+                                                    data-patient-nom="${fn:escapeXml(demande.consultation.patient.nom)}"
+                                                    data-patient-prenom="${fn:escapeXml(demande.consultation.patient.prenom)}"
+                                                    data-patient-telephone="${fn:escapeXml(demande.consultation.patient.telephone)}"
+                                                    data-antecedents="${fn:escapeXml(demande.consultation.patient.dossierMedical.antecedents)}"
+                                                    data-allergies="${fn:escapeXml(demande.consultation.patient.dossierMedical.allergies)}"
+                                                    data-traitement="${fn:escapeXml(demande.consultation.patient.dossierMedical.traitementEnCours)}"
+                                            >Voir Consultation</button>
+
+                                            <c:if test="${not empty demande.consultation.patient.signesVitaux}">
+                                                <button onclick="openSignesModal(this)"
+                                                        class="bg-purple-600 text-white px-2 py-1 rounded text-xs hover:bg-purple-700"
+                                                        data-fc="${fn:escapeXml(demande.consultation.patient.signesVitaux.frequenceCardiaque)}"
+                                                        data-tension="${fn:escapeXml(demande.consultation.patient.signesVitaux.tension)}"
+                                                        data-temp="${fn:escapeXml(demande.consultation.patient.signesVitaux.temperature)}"
+                                                        data-poids="${fn:escapeXml(demande.consultation.patient.signesVitaux.poids)}"
+                                                        data-frequence-respiratoire="${fn:escapeXml(demande.consultation.patient.signesVitaux.frequenceRespiratoire)}"
+                                                        data-taille="${fn:escapeXml(demande.consultation.patient.signesVitaux.taille)}"
+                                                >Voir Signes Vitaux</button>
+                                            </c:if>
+                                        </c:if>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <tr><td colspan="5" class="py-4 px-6">Aucune demande trouvée.</td></tr>
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>
@@ -106,18 +121,19 @@
 <div id="modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
         <h2 class="text-2xl font-semibold mb-4 text-blue-700">Repondre a une Expertise</h2>
-        <form class="space-y-4">
+        <form class="space-y-4" method="post" action="${pageContext.request.contextPath}/demande-expertise/respond">
+            <input type="hidden" id="modal-demande-id" name="demandeId" />
             <div>
-                <label class="block text-gray-700">Patient</label>
+                <label for="modal-patient" class="block text-gray-700">Patient</label>
                 <input id="modal-patient" type="text" class="w-full border rounded-lg px-3 py-2 mt-1" readonly>
             </div>
             <div>
-                <label class="block text-gray-700">Avis medical</label>
-                <textarea class="w-full border rounded-lg px-3 py-2 mt-1" rows="4" placeholder="Saisir l'avis du specialiste..."></textarea>
+                <label for="modal-avis" class="block text-gray-700">Avis medical</label>
+                <textarea id="modal-avis" name="avisMedecin" class="w-full border rounded-lg px-3 py-2 mt-1" rows="4" placeholder="Saisir l'avis du specialiste..."></textarea>
             </div>
             <div>
-                <label class="block text-gray-700">Recommandations</label>
-                <textarea class="w-full border rounded-lg px-3 py-2 mt-1" rows="3" placeholder="Saisir les recommandations..."></textarea>
+                <label for="modal-rec" class="block text-gray-700">Recommandations</label>
+                <textarea id="modal-rec" name="recommandations" class="w-full border rounded-lg px-3 py-2 mt-1" rows="3" placeholder="Saisir les recommandations..."></textarea>
             </div>
             <div class="flex justify-end space-x-3">
                 <button type="button" onclick="hideModal()" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition">Annuler</button>
@@ -127,70 +143,42 @@
     </div>
 </div>
 
-<!-- Modal Consultation -->
+<!-- Consultation Modal -->
 <div id="modal-consultation" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50">
-    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
-        <h2 class="text-2xl font-semibold mb-4 text-green-700">Consultation</h2>
-        <div class="space-y-4">
-            <div>
-                <span class="block text-gray-700 font-semibold">Patient :</span>
-                <span id="consultation-patient" class="block text-gray-900"></span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Date de consultation :</span>
-                <span class="block text-gray-900">13/10/2025</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Diagnostic :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Traitement :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Observations :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div class="flex justify-end space-x-3">
-                <button type="button" onclick="hideConsultationModal()" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition">Fermer</button>
-            </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-2xl">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold text-blue-700">Détails de la Consultation</h2>
+            <button onclick="closeConsultationModal()" class="text-gray-600 hover:text-gray-900">Fermer</button>
+        </div>
+        <div class="space-y-3 text-gray-700">
+            <p><strong>Date:</strong> <span id="consultation-date">-</span></p>
+            <p><strong>Motif:</strong> <span id="consultation-motif">-</span></p>
+            <p><strong>Observations:</strong> <span id="consultation-observations">-</span></p>
+            <p><strong>Traitement en cours:</strong> <span id="consultation-traitement">-</span></p>
+            <h3 class="font-semibold mt-3">Patient & Dossier Médical</h3>
+            <p><strong>Nom:</strong> <span id="consultation-patient-nom">-</span></p>
+            <p><strong>Prénom:</strong> <span id="consultation-patient-prenom">-</span></p>
+            <p><strong>Téléphone:</strong> <span id="consultation-patient-telephone">-</span></p>
+            <p><strong>Antécédents:</strong> <span id="consultation-antecedents">-</span></p>
+            <p><strong>Allergies:</strong> <span id="consultation-allergies">-</span></p>
         </div>
     </div>
 </div>
 
-<!-- Modal Signes Vitaux -->
+<!-- Signes Vitaux Modal -->
 <div id="modal-signes" class="hidden fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
-        <h2 class="text-2xl font-semibold mb-4 text-purple-700">Signes Vitaux</h2>
-        <div class="space-y-4">
-            <div>
-                <span class="block text-gray-700 font-semibold">Patient :</span>
-                <span id="signes-patient" class="block text-gray-900"></span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Fréquence cardiaque :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Tension :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Température :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Poids :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div>
-                <span class="block text-gray-700 font-semibold">Taille :</span>
-                <span class="block text-gray-900">-</span>
-            </div>
-            <div class="flex justify-end space-x-3">
-                <button type="button" onclick="hideSignesModal()" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition">Fermer</button>
-            </div>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold text-blue-700">Signes Vitaux</h2>
+            <button onclick="closeSignesModal()" class="text-gray-600 hover:text-gray-900">Fermer</button>
+        </div>
+        <div class="space-y-2 text-gray-700">
+            <p><strong>Fréquence cardiaque:</strong> <span id="signes-fc">-</span></p>
+            <p><strong>Tension:</strong> <span id="signes-tension">-</span></p>
+            <p><strong>Température:</strong> <span id="signes-temp">-</span></p>
+            <p><strong>Poids:</strong> <span id="signes-poids">-</span></p>
+            <p><strong>Fréquence respiratoire:</strong> <span id="signes-frequence-respiratoire">-</span></p>
+            <p><strong>Taille:</strong> <span id="signes-taille">-</span></p>
         </div>
     </div>
 </div>
@@ -200,29 +188,45 @@
 </footer>
 
 <script>
-    function showModal(patientName) {
+    function showModal(patientName, demandeId) {
         document.getElementById('modal').classList.remove('hidden');
         document.getElementById('modal-patient').value = patientName;
+        document.getElementById('modal-demande-id').value = demandeId;
     }
 
     function hideModal() {
         document.getElementById('modal').classList.add('hidden');
     }
 
-    function showConsultation(patientName) {
-        document.getElementById('consultation-patient').textContent = patientName;
+    function openConsultationModal(btn) {
+        document.getElementById('consultation-date').textContent = btn.getAttribute('data-date') || '-';
+        document.getElementById('consultation-motif').textContent = btn.getAttribute('data-motif') || '-';
+        document.getElementById('consultation-observations').textContent = btn.getAttribute('data-observations') || '-';
+        document.getElementById('consultation-patient-nom').textContent = btn.getAttribute('data-patient-nom') || '-';
+        document.getElementById('consultation-patient-prenom').textContent = btn.getAttribute('data-patient-prenom') || '-';
+        document.getElementById('consultation-patient-telephone').textContent = btn.getAttribute('data-patient-telephone') || '-';
+        document.getElementById('consultation-antecedents').textContent = btn.getAttribute('data-antecedents') || '-';
+        document.getElementById('consultation-allergies').textContent = btn.getAttribute('data-allergies') || '-';
+        document.getElementById('consultation-traitement').textContent = btn.getAttribute('data-traitement') || '-';
         document.getElementById('modal-consultation').classList.remove('hidden');
     }
-    function hideConsultationModal() {
+    function closeConsultationModal() {
         document.getElementById('modal-consultation').classList.add('hidden');
     }
-    function showSignesVitaux(patientName) {
-        document.getElementById('signes-patient').textContent = patientName;
+
+    function openSignesModal(btn) {
+        document.getElementById('signes-fc').textContent = btn.getAttribute('data-fc') || '-';
+        document.getElementById('signes-tension').textContent = btn.getAttribute('data-tension') || '-';
+        document.getElementById('signes-temp').textContent = btn.getAttribute('data-temp') || '-';
+        document.getElementById('signes-poids').textContent = btn.getAttribute('data-poids') || '-';
+        document.getElementById('signes-frequence-respiratoire').textContent = btn.getAttribute('data-frequence-respiratoire') || '-';
+        document.getElementById('signes-taille').textContent = btn.getAttribute('data-taille') || '-';
         document.getElementById('modal-signes').classList.remove('hidden');
     }
-    function hideSignesModal() {
+    function closeSignesModal() {
         document.getElementById('modal-signes').classList.add('hidden');
     }
+
 </script>
 
 </body>

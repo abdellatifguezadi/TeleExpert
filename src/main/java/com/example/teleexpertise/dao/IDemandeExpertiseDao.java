@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IDemandeExpertiseDao {
     void save(DemandeExpertise demandeExpertise);
-
+    List<DemandeExpertise> findByMedecinSpecialisteId(Long medecinSpecialisteId);
 }

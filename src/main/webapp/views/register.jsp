@@ -76,8 +76,6 @@
                            class="w-full px-3 py-3 border-2 border-gray-200 rounded-md text-base transition-colors duration-300 focus:outline-none focus:border-blue-500">
                 </div>
 
-                <!-- Confirm password removed as requested -->
-
             </div>
 
             <div class="mb-6">
