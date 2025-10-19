@@ -13,7 +13,7 @@
     <div class="max-w-7xl mx-auto p-5">
         <!-- Header -->
         <div class="bg-blue-800 text-white p-6 rounded-lg mb-8 text-center">
-            <h1 class="text-3xl font-bold mb-2">🏥 Tableau de bord - Infirmier</h1>
+            <h1 class="text-3xl font-bold mb-2">Tableau de bord - Infirmier</h1>
             <p class="text-gray-200">Gestion des patients et soins infirmiers</p>
         </div>
         <!-- Actions Bar -->
@@ -21,9 +21,6 @@
             <div class="flex gap-3">
                 <a href="${pageContext.request.contextPath}/infirmier/add-patient" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
                      Ajouter un Patient
-                </a>
-                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
-                     Rapport journalier
                 </a>
             </div>
         </div>
@@ -88,12 +85,31 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm">
                                             <div class="flex gap-2">
-                                                <a href="add-signesvitaux.jsp?id=${patient.id}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-colors">
-                                                     ajoute signes vitaux
-                                                </a>
-                                                <a href="add-dossiermedical.jsp?id=${patient.id}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs transition-colors">
-                                                     ajoute dossier medical
-                                                </a>
+                                                <c:choose>
+                                                    <c:when test="${not empty patient.signesVitaux}">
+                                                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium rounded text-gray-700 bg-gray-200">
+                                                            Signes vitaux enregistrés
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="add-signesvitaux.jsp?id=${patient.id}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-colors">
+                                                             ajoute signes vitaux
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <c:choose>
+                                                    <c:when test="${not empty patient.dossierMedical}">
+                                                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium rounded text-gray-700 bg-gray-200">
+                                                            Dossier médical présent
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="add-dossiermedical.jsp?id=${patient.id}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs transition-colors">
+                                                             ajoute dossier medical
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </td>
                                     </tr>
